@@ -3,9 +3,8 @@ package vocab.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book {
+public class Category {
     private Long id;
     private String name;
-    private List<Category> categories =  new ArrayList<>();
-
+    private List<Translation> translations =  new ArrayList<>();
 }
