@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VocabQuizSpring.iml" filepath="$PROJECT_DIR$/VocabQuizSpring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/matchManagement/matchManagement.iml" filepath="$PROJECT_DIR$/matchManagement/matchManagement.iml" />
       <module fileurl="file://$PROJECT_DIR$/userManagement/userManagement.iml" filepath="$PROJECT_DIR$/userManagement/userManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vocabularyManagement/vocabularyManagement.iml" filepath="$PROJECT_DIR$/vocabularyManagement/vocabularyManagement.iml" />
       <module fileurl="file://$PROJECT_DIR$/web/web.iml" filepath="$PROJECT_DIR$/web/web.iml" />
     </modules>
   </component>

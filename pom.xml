@@ -5,6 +5,8 @@
     <modules>
         <module>userManagement</module>
         <module>web</module>
+        <module>matchManagement</module>
+        <module>vocabularyManagement</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

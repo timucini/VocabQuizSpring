@@ -6,20 +6,26 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="matchManagement" />
         <module name="userManagement" />
+        <module name="vocabularyManagement" />
         <module name="web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="matchManagement" target="11" />
       <module name="userManagement" target="11" />
       <module name="VocabQuizSpring" target="11" />
+      <module name="vocabularyManagement" target="11" />
       <module name="web" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="VocabQuizSpring" options="-parameters" />
+      <module name="matchManagement" options="-parameters" />
       <module name="userManagement" options="-parameters" />
+      <module name="vocabularyManagement" options="-parameters" />
       <module name="web" options="-parameters" />
     </option>
   </component>

@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>vocab</groupId>
-    <artifactId>web</artifactId>
+    <artifactId>matchManagement</artifactId>
     <packaging>jar</packaging>
 
     <properties>
@@ -24,24 +24,6 @@
             <artifactId>userManagement</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>vocab</groupId>
-            <artifactId>matchManagement</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>vocab</groupId>
-            <artifactId>vocabularyManagement</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
