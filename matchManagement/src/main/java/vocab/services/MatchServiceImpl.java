@@ -18,18 +18,13 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Match createMatch(User user) {
+    public Match createMatch(User user, String bookName) {
         return null;
     }
 
     @Override
     public Match getMatch(Long id) {
         return null;
-    }
-
-    @Override
-    public void setMatch(Match match) {
-
     }
 
     @Override
