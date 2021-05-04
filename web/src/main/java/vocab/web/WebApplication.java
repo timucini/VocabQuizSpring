@@ -95,7 +95,7 @@ public class WebApplication {
             //Match-Test
             // create One-Player Match
             User userPlayer1 = new User("player1","abc");
-            matchService.createMatch(userPlayer1);
+            matchService.createMatch(userPlayer1,"bookName");
 
             // update match -> normally just update
             Answer answer = new Answer("answer1",true);

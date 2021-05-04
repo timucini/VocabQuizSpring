@@ -17,8 +17,9 @@ public class MatchServiceImpl implements MatchService {
         this.matchRepository = matchRepository;
     }
 
+
     @Override
-    public Match createMatch(User user) {
+    public Match createMatch(User user, String bookName) {
         Match match= new Match(user);
         matchRepository.save(match);
         return match;
@@ -29,10 +30,6 @@ public class MatchServiceImpl implements MatchService {
         return null;
     }
 
-    @Override
-    public void setMatch(Match match) {
-
-    }
 
     @Override
     public Boolean updateMatch(Match match) {
