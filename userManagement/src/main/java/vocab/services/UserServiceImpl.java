@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import vocab.domain.User;
 import vocab.repositories.UserRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -15,6 +17,8 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
     }
 
+    @Override
+    @Transactional
     public Boolean addUser(String username, String password) {
         User user = new User(username,password);
         userRepository.save(user);
@@ -24,6 +28,7 @@ public class UserServiceImpl implements UserService{
         return true;
     }
 
+    @Transactional
     public User getUser(String username, String password) {
         /**
          * TODO

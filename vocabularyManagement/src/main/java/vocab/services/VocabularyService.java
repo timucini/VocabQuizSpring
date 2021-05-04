@@ -23,4 +23,5 @@ public interface VocabularyService {
      * @return The method returns a List instance of Category representing all categories of a book.
      */
     List<Category> getCategoriesByBook(Book book);
+
 }
