@@ -13,4 +13,5 @@ public interface VocabularyService {
     List<Book> getBooksByGameDirection(GameDirection gameDirection);
 
     List<Category> getCategoriesByBook(Book book);
+
 }
