@@ -1,5 +1,7 @@
 package vocab.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class GameDirection {
 
     private String languageTo;
 
-
+    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)

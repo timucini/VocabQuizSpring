@@ -1,5 +1,7 @@
 package vocab.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +14,19 @@ public class Book {
     private Long id;
     private String name;
 
+    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Category> categories =  new ArrayList<>();
 
-    public Book(String name) {
+    @ManyToOne
+    @JoinColumn(name = "gamedirection_Id")
+    private GameDirection gameDirection;
+
+    public Book(String name, GameDirection gameDirection) {
         this.name = name;
+        this.gameDirection = gameDirection;
     }
 
     public Book() {
@@ -49,4 +57,11 @@ public class Book {
         this.categories = categories;
     }
 
+    public GameDirection getGameDirection() {
+        return gameDirection;
+    }
+
+    public void setGameDirection(GameDirection gameDirection) {
+        this.gameDirection = gameDirection;
+    }
 }

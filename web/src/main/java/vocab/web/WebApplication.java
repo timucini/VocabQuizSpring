@@ -56,12 +56,11 @@ public class WebApplication {
             gameDirection2.setBooks(books);
             vocabularyService.addGameDirection(gameDirection1);
             vocabularyService.addGameDirection(gameDirection2);
-
              */
             GameDirection gameDirection1 = new GameDirection("Deutsch","English");
-            Book book1 = new Book("book1");
-            Category category1 = new Category("category1");
-            Translation translation1 = new Translation("From","to");
+            Book book1 = new Book("book1",gameDirection1);
+            Category category1 = new Category("category1",book1);
+            Translation translation1 = new Translation("From","to",category1);
             List<Translation> translationList = Arrays.asList(translation1);
             List<Category> categoryList = Arrays.asList(category1);
             List<Book> books = Arrays.asList(book1);
@@ -69,6 +68,8 @@ public class WebApplication {
             book1.setCategories(categoryList);
             gameDirection1.setBooks(books);
             vocabularyService.addGameDirection(gameDirection1);
+
+            System.out.println(vocabularyService.getDirections());
 
             //Match-Test
 

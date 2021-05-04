@@ -11,9 +11,13 @@ public class Translation {
     private String stringFrom;
     private String stringTo;
 
-    public Translation(String stringFrom, String stringTo) {
+    @ManyToOne
+    private Category category;
+
+    public Translation(String stringFrom, String stringTo, Category category) {
         this.stringFrom = stringFrom;
         this.stringTo = stringTo;
+        this.category = category;
     }
 
     public Translation() {
@@ -45,4 +49,11 @@ public class Translation {
         this.stringTo = stringTo;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
