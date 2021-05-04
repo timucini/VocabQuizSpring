@@ -20,13 +20,8 @@ public class Book {
             orphanRemoval = true)
     private List<Category> categories =  new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "gamedirection_Id")
-    private GameDirection gameDirection;
-
-    public Book(String name, GameDirection gameDirection) {
+    public Book(String name) {
         this.name = name;
-        this.gameDirection = gameDirection;
     }
 
     public Book() {
@@ -57,11 +52,4 @@ public class Book {
         this.categories = categories;
     }
 
-    public GameDirection getGameDirection() {
-        return gameDirection;
-    }
-
-    public void setGameDirection(GameDirection gameDirection) {
-        this.gameDirection = gameDirection;
-    }
 }

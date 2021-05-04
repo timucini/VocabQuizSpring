@@ -1,11 +1,12 @@
 package vocab.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="answer")
 public class Answer {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String answer;
     private Boolean correct;

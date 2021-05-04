@@ -21,13 +21,8 @@ public class Category {
             orphanRemoval = true)
     private List<Translation> translations =  new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
-
-    public Category(String name, Book book) {
+    public Category(String name) {
         this.name = name;
-        this.book = book;
     }
 
     public Category() {
@@ -58,11 +53,4 @@ public class Category {
         this.translations = translations;
     }
 
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
 }

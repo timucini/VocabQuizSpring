@@ -19,7 +19,9 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public Match createMatch(User user) {
-        return null;
+        Match match= new Match(user);
+        matchRepository.save(match);
+        return match;
     }
 
     @Override
@@ -34,7 +36,11 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public Boolean updateMatch(Match match) {
-        return null;
+        /**
+         * Just for Testin -> normally need to update not! safe
+         */
+        matchRepository.save(match);
+        return true;
     }
 
     @Override
