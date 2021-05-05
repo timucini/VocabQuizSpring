@@ -21,18 +21,16 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public Boolean addUser(String username, String password) {
         User user = new User(username,password);
-        userRepository.save(user);
-        /**
-         * TODO
-         */
-        return true;
+        try {
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Transactional
     public User getUser(String username, String password) {
-        /**
-         * TODO
-         */
-        return null;
+        return userRepository.getUserByUserNameAndPassword(username,password);
     }
 }

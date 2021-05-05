@@ -33,6 +33,8 @@ public class WebApplication {
             User user1 = new User("User1","password");
             userService.addUser(user1.getUserName(), user1.getPassword());
 
+            User usertest =  userService.getUser(user1.getUserName(),user1.getPassword());
+            System.out.println(usertest.toString());
             /*
             // Vocab-Test bidirectional
             GameDirection gameDirection1 = new GameDirection("Deutsch","English");
@@ -59,6 +61,7 @@ public class WebApplication {
             vocabularyService.addGameDirection(gameDirection1);
             vocabularyService.addGameDirection(gameDirection2);
              */
+
             GameDirection gameDirection1 = new GameDirection("Deutsch","English");
             Book book1 = new Book("book1");
             Book book2 = new Book("book2");
@@ -89,8 +92,7 @@ public class WebApplication {
             List<Book> books = Arrays.asList(book1,book2);
             gameDirection1.setBooks(books);
             vocabularyService.addGameDirection(gameDirection1);
-
-            System.out.println(vocabularyService.getDirections());
+            System.out.println(vocabularyService.getDirections().toString());
 
             //Match-Test
             // create One-Player Match
@@ -98,6 +100,7 @@ public class WebApplication {
             matchService.createMatch(userPlayer1,"bookName");
 
             // update match -> normally just update
+            Match match = matchService.getMatch(16L);
             Answer answer = new Answer("answer1",true);
             Answer answer2 = new Answer("answer2",false);
             Question question = new Question("question","answer1","answer2","answer3","answer4");
@@ -107,7 +110,7 @@ public class WebApplication {
             Round round = new Round(questionList);
             round.setQuestions(questionList);
             User userPlayer2 = new User("player2","abc");
-            Match match = new Match(userPlayer2);
+            match.setPlayer2(userPlayer2);
             User userPlayer3 = new User("player3","abc");
             match.setPlayer2(userPlayer3);
             match.setScorePlayer1(5);

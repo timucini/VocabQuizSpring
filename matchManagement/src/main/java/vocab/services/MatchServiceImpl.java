@@ -18,6 +18,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
 
+    // BookName??? Not implemented yet
     @Override
     public Match createMatch(User user, String bookName) {
         Match match= new Match(user);
@@ -27,21 +28,22 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public Match getMatch(Long id) {
-        return null;
+        return matchRepository.findById(id).get();
     }
 
 
     @Override
     public Boolean updateMatch(Match match) {
-        /**
-         * Just for Testin -> normally need to update not! safe
-         */
-        matchRepository.save(match);
-        return true;
+        try {
+            matchRepository.saveAndFlush(match);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public List<Match> getAvailableMatches() {
-        return null;
+         return matchRepository.findAll();
     }
 }

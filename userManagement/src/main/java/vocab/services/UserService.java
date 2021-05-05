@@ -10,7 +10,7 @@ public interface UserService {
     /**This method add an new User.
      * @param username The name of the new user.
      * @param password The required password of the new user.
-     * @return The method returns a boolean representing the succes of the method.
+     * @return The method returns a boolean representing the success of the method.
      */
     public Boolean addUser(String username, String password);
     /**This method is for respective logging a user in.

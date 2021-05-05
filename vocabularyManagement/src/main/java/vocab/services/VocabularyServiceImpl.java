@@ -33,15 +33,17 @@ public class VocabularyServiceImpl implements VocabularyService {
     @Override
     @Transactional
     public List<GameDirection> getDirections() {
-        return null;
+        return gameDirectionRepository.findAll();
     }
 
+    // No GameDirection in Book -> Bidirectional Relationship better?
     @Override
     @Transactional
     public List<Book> getBooksByGameDirection(GameDirection gameDirection) {
         return null;
     }
 
+    // No Book in Categories -> Bidirectional Relationship better?
     @Override
     @Transactional
     public List<Category> getCategoriesByBook(Book book) {
