@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/matchManagement.export/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/matchManagement/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/userManagement.export/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/userManagement/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/vocabularyManagement.export/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/vocabularyManagement/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/src/main/java" charset="UTF-8" />
   </component>

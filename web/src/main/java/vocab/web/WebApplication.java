@@ -1,5 +1,6 @@
 package vocab.web;
 
+import vocab.domain.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import vocab.domain.*;
-import vocab.services.MatchServiceImpl;
-import vocab.services.UserService;
-import vocab.services.UserServiceImpl;
-import vocab.services.VocabularyServiceImpl;
+import vocab.services.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +25,7 @@ public class WebApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(UserServiceImpl userService, VocabularyServiceImpl vocabularyService, MatchServiceImpl matchService) {
+    CommandLineRunner commandLineRunner(UserService userService, VocabularyService vocabularyService, MatchService matchService) {
         return args -> {
             // User-Test
             User user1 = new User("User1","password");

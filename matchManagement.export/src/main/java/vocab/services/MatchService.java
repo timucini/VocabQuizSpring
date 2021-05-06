@@ -1,9 +1,7 @@
 package vocab.services;
 
-import org.springframework.stereotype.Service;
 import vocab.domain.Match;
 import vocab.domain.User;
-
 import java.util.List;
 
 /**This interface provides methods to manage matches.

@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/VocabularyDatabase</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="VocabularyDatabase@localhost [2]" uuid="f8c899b1-47c0-407b-bcd0-11a867baec55">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/VocabularyDatabase</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
