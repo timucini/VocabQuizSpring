@@ -21,6 +21,10 @@ public class Category {
             orphanRemoval = true)
     private List<Translation> translations =  new ArrayList<>();
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "book_id")
+    private Book book;
+
     public Category(String name) {
         this.name = name;
     }

@@ -35,7 +35,7 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public Boolean updateMatch(Match match) {
         try {
-            matchRepository.saveAndFlush(match);
+            matchRepository.save(match);
             return true;
         } catch (Exception e) {
             return false;
