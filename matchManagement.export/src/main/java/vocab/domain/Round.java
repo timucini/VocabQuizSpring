@@ -1,6 +1,5 @@
 package vocab.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +11,18 @@ public class Round {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "match_Id")
-    private Match match;
-
-    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Question> questions =  new ArrayList<>();
 
-    public Round(List<Question> questions) {
+    @OneToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
+    public Round(List<Question> questions, Category category) {
         this.questions = questions;
+        this.category = category;
     }
 
     public Round() {
@@ -37,19 +36,29 @@ public class Round {
         this.id = id;
     }
 
-    public Match getMatch() {
-        return match;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
-    }
-
     public List<Question> getQuestions() {
         return questions;
     }
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Round{" +
+                "id=" + id +
+                ", questions=" + questions +
+                ", category=" +
+                ", match=" +
+                '}';
     }
 }

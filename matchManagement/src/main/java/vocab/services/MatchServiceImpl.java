@@ -2,6 +2,7 @@ package vocab.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vocab.domain.Book;
 import vocab.domain.Match;
 import vocab.domain.User;
 import vocab.repositories.MatchRepository;
@@ -17,11 +18,9 @@ public class MatchServiceImpl implements MatchService {
         this.matchRepository = matchRepository;
     }
 
-
-    // BookName??? Not implemented yet
     @Override
-    public Match createMatch(User user, String bookName) {
-        Match match= new Match(user);
+    public Match createMatch(User user,Book book) {
+        Match match= new Match(user,book);
         matchRepository.save(match);
         return match;
     }
@@ -46,4 +45,6 @@ public class MatchServiceImpl implements MatchService {
     public List<Match> getAvailableMatches() {
          return matchRepository.findAll();
     }
+
+
 }

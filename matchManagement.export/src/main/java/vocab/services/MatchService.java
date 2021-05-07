@@ -1,5 +1,6 @@
 package vocab.services;
 
+import vocab.domain.Book;
 import vocab.domain.Match;
 import vocab.domain.User;
 import java.util.List;
@@ -11,15 +12,15 @@ import java.util.List;
 public interface MatchService {
     /**This method can be used to create a new match.
      * @param user The method requires the user who creates the match.
-     * @param bookName The method requires the name of the book, used to play.
+     * @param book The method requires a book, used to play.
      * @return The method returns a new Match instance.
      */
-    public Match createMatch(User user, String bookName);
+    Match createMatch(User user, Book book);
     /**This method can be used to access a match.
      * @param match_id The method requires the match_id representing the match.
      * @return The method retunrs a Match instance, or null in case of not finding a match with the match_id.
      */
-    public Match getMatch(Long match_id);
+    Match getMatch(Long match_id);
     /**This method can be used to update a match persistant.
      * @param match The method requires the match to be updated.
      * @return The method retunrs a boolean representing the success of the method.

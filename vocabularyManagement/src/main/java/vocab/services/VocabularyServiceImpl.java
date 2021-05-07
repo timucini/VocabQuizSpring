@@ -27,11 +27,6 @@ public class VocabularyServiceImpl implements VocabularyService {
         return this.bookRepository.findAll();
     }
 
-    @Transactional
-    @Override
-    public List<Category> getCategoriesByBook(Book book) {
-        return this.categoryRepository.getCategoriesByBook(book);
-    }
 
     @Transactional
     @Override

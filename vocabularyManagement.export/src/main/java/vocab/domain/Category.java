@@ -1,7 +1,5 @@
 package vocab.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +13,15 @@ public class Category {
 
     private String name;
 
-    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Translation> translations =  new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "book_id")
-    private Book book;
 
-    public Category(String name) {
+    public Category(String name, List<Translation> translations) {
         this.name = name;
+        this.translations = translations;
     }
 
     public Category() {

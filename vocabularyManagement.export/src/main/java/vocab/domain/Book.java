@@ -1,6 +1,10 @@
 package vocab.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,16 +16,19 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
 
-    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Category> categories =  new ArrayList<>();
 
-    public Book(String name) {
+    public Book(String name, List<Category> categories) {
         this.name = name;
+        this.categories = categories;
     }
 
     public Book() {
@@ -51,5 +58,4 @@ public class Book {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
-
 }
