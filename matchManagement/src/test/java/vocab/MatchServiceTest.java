@@ -31,13 +31,12 @@ public class MatchServiceTest {
 
         // Stubbing
         User user = new User("Testuser", "password");
-        Match match = new Match(user);
-        Match match2 = new Match(user);
+        Book book = new Book();
+        Match match = new Match(user, book);
+        Match match2 = new Match(user, book);
         ArrayList<Match> matchList = new ArrayList<Match>();
         matchList.add(match);
         matchList.add(match2);
-        Book book = new Book("access 3");
-        match.setBook(book);
         Long matchId = 1L;
 //        Mockito.when(matchService.createMatch(user, book.getName())).thenReturn(match);
 //        Mockito.when(matchService.getMatch(matchId)).thenReturn(match);
@@ -47,7 +46,8 @@ public class MatchServiceTest {
     @Test
     public void testCreateMatch() {
         User user = new User("Testuser", "password");
-        Match createdMatch = matchService.createMatch(user, "access 3");
+        Book book = new Book();
+        Match createdMatch = matchService.createMatch(user, book);
         Assert.assertNotNull(createdMatch);
 //        Assert.assertEquals("Testuser", matchService.getMatch(1L).getPlayer1().getUserName());
 //        Assert.assertEquals(createdMatch, matchService.getMatch(1L));
@@ -56,7 +56,8 @@ public class MatchServiceTest {
     @Test
     public void testGetMatch() {
         User user = new User("Testuser", "password");
-        Match match = new Match(user);
+        Book book = new Book();
+        Match match = new Match(user, book);
         Long matchId = 1L;
         Match returnedMatch = matchService.getMatch(matchId);
         Assert.assertEquals(match, returnedMatch);
@@ -66,7 +67,8 @@ public class MatchServiceTest {
     public void testGetAllMatches() {
         List<Match> foundMatches = matchService.getAvailableMatches();
         User user = new User("Testuser", "password");
-        Match match2 = new Match(user);
+        Book book = new Book();
+        Match match2 = new Match(user, book);
         Assert.assertNotNull(foundMatches);
 //        Assert.assertTrue(foundMatches.contains(match2));
     }
