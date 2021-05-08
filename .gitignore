@@ -52,3 +52,6 @@ buildNumber.properties
 .idea/libraries/Maven__org_mockito_mockito_core_3_6_28.xml
 .idea/dataSources.xml
 .idea/compiler.xml
+.idea/compiler.xml
+.idea/dataSources.xml
+.idea/libraries/Maven__org_mockito_mockito_core_3_6_28.xml
