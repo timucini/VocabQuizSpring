@@ -119,6 +119,10 @@ public class WebApplication {
             match.setCurrentRound(round);
             match.setBook(matchbook);
             matchService.updateMatch(match);
+            User usertest2 =  userService.getUser(user1.getUserName(),user1.getPassword());
+            System.out.println("yoo"+ userService.existsUserById(1L));
+            List<Match> x = matchService.getAvailableMatches();
+            System.out.println("x");
         };
     }
 }

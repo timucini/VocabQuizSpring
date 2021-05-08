@@ -19,18 +19,23 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public Boolean addUser(String username, String password) {
+    public User addUser(String username, String password) {
         User user = new User(username,password);
         try {
             userRepository.save(user);
-            return true;
+            return user;
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
 
     @Transactional
     public User getUser(String username, String password) {
         return userRepository.getUserByUserNameAndPassword(username,password);
+    }
+
+    @Transactional
+    public boolean existsUserById(Long id) {
+        return userRepository.existsById(id);
     }
 }
