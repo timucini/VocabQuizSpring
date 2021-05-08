@@ -17,5 +17,5 @@ public interface VocabularyService {
      * This method can be used to insert a book into the Database
      * @param book
      */
-    void addBook(Book book);
+    Book addBook(Book book);
 }

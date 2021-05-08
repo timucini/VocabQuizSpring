@@ -27,10 +27,10 @@ public class VocabularyServiceImpl implements VocabularyService {
         return this.bookRepository.findAll();
     }
 
-
     @Transactional
     @Override
-    public void addBook(Book book) {
+    public Book addBook(Book book) {
         this.bookRepository.save(book);
+        return book;
     }
 }

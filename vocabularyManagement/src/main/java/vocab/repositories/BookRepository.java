@@ -7,5 +7,4 @@ import vocab.domain.Category;
 
 @Repository
 public interface BookRepository  extends JpaRepository<Book, Long> {
-        
 }
