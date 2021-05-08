@@ -41,6 +41,7 @@ public class MatchServiceTest {
 //        Mockito.when(matchService.createMatch(user, book.getName())).thenReturn(match);
 //        Mockito.when(matchService.getMatch(matchId)).thenReturn(match);
         Mockito.when(matchService.getAvailableMatches()).thenReturn(matchList);
+        Mockito.when(matchService.updateMatch(match)).thenReturn(true);
     }
 
     @Test
@@ -71,6 +72,17 @@ public class MatchServiceTest {
         Match match2 = new Match(user, book);
         Assert.assertNotNull(foundMatches);
 //        Assert.assertTrue(foundMatches.contains(match2));
+    }
+
+    @Test
+    public void testUpdateMatch() {
+        User user = new User("Testuser", "password");
+        Book book = new Book();
+        Match match = new Match(user, book);
+        boolean matchUpdated = this.matchService.updateMatch(match);
+//        Assert.assertNotNull(matchUpdated);
+        Assert.assertTrue(matchUpdated);
+
     }
 
 
