@@ -10,8 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>vocab</groupId>
-    <artifactId>matchManagement</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>matchManagement.export</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -21,25 +20,14 @@
     <dependencies>
         <dependency>
             <groupId>vocab</groupId>
-            <artifactId>matchManagement.export</artifactId>
+            <artifactId>userManagement.export</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>vocab</groupId>
-            <artifactId>vocabularyManagement</artifactId>
+            <artifactId>vocabularyManagement.export</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
-
 </project>

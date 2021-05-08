@@ -1,30 +1,30 @@
 package vocab.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="book")
-public class Book {
+@Table(name="category")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
 
-    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private List<Category> categories =  new ArrayList<>();
+    private List<Translation> translations =  new ArrayList<>();
 
-    public Book(String name) {
+
+    public Category(String name, List<Translation> translations) {
         this.name = name;
+        this.translations = translations;
     }
 
-    public Book() {
+    public Category() {
 
     }
 
@@ -44,12 +44,12 @@ public class Book {
         this.name = name;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public List<Translation> getTranslations() {
+        return translations;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setTranslations(List<Translation> translations) {
+        this.translations = translations;
     }
 
 }

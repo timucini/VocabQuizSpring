@@ -1,10 +1,7 @@
 package vocab.domain;
 
-import org.springframework.context.annotation.Bean;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @Table(name = "match")
@@ -13,33 +10,30 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    // Maybe not persist -> needs to be checked
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "player1_id", referencedColumnName = "id")
     private User player1;
 
-    // Maybe not persist -> needs to be checked
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "player2_id", referencedColumnName = "id")
     private User player2;
 
-    // Maybe not persist -> needs to be checked
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "currenctRound_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "round_id", referencedColumnName = "id")
     private Round currentRound;
 
     private Integer scorePlayer1;
     private Integer scorePlayer2;
     private Boolean finished;
 
-    public Match(User player1) {
+    public Match(User player1, Book book) {
         this.player1 = player1;
+        this.book = book;
     }
-
 
     public Match() {
 
@@ -77,14 +71,6 @@ public class Match {
         this.book = book;
     }
 
-    public Round getCurrentRound() {
-        return currentRound;
-    }
-
-    public void setCurrentRound(Round currentRound) {
-        this.currentRound = currentRound;
-    }
-
     public Integer getScorePlayer1() {
         return scorePlayer1;
     }
@@ -107,5 +93,13 @@ public class Match {
 
     public void setFinished(Boolean finished) {
         this.finished = finished;
+    }
+
+    public Round getCurrentRound() {
+        return currentRound;
+    }
+
+    public void setCurrentRound(Round currentRound) {
+        this.currentRound = currentRound;
     }
 }

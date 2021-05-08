@@ -1,31 +1,37 @@
 package vocab.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="category")
-public class Category {
+@Table(name="book")
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
 
-    @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private List<Translation> translations =  new ArrayList<>();
+    @Fetch(value = FetchMode.SUBSELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Category> categories =  new ArrayList<>();
 
-    public Category(String name) {
+    public Book(String name, List<Category> categories) {
         this.name = name;
+        this.categories = categories;
     }
 
-    public Category() {
+    public Book() {
 
     }
 
@@ -45,12 +51,11 @@ public class Category {
         this.name = name;
     }
 
-    public List<Translation> getTranslations() {
-        return translations;
+    public List<Category> getCategories() {
+        return categories;
     }
 
-    public void setTranslations(List<Translation> translations) {
-        this.translations = translations;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
-
 }

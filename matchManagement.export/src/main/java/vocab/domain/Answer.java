@@ -11,9 +11,16 @@ public class Answer {
     private String answer;
     private Boolean correct;
 
-    public Answer(String answer, Boolean correct) {
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+
+    public Answer(String answer, Boolean correct, User user) {
         this.answer = answer;
         this.correct = correct;
+        this.user = user;
     }
 
     public Answer() {
@@ -42,6 +49,14 @@ public class Answer {
 
     public void setCorrect(Boolean correct) {
         this.correct = correct;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }
