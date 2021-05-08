@@ -14,6 +14,12 @@
         <module name="matchManagement.export" />
         <module name="vocabularyManagement" />
       </profile>
+      <profile name="Annotation profile for VocabQuizSpring" enabled="true">
+        <sourceOutputDir name="../target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="userManagement" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="matchManagement" target="11" />
