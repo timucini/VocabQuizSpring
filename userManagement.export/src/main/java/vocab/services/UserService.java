@@ -19,5 +19,4 @@ public interface UserService {
      * @return The method returns a User instance, or null in case of not finding a user with the same username and password.
      */
     public User getUser(String username, String password);
-    public boolean existsUserById(Long id);
 }
