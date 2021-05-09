@@ -14,6 +14,12 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
+            <groupId>vocab</groupId>
+            <artifactId>vocabularyManagement.export</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -24,14 +30,5 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>vocab</groupId>
-            <artifactId>vocabularyManagement.export</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 
 </project>
