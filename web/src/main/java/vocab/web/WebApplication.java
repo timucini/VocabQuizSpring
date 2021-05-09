@@ -102,11 +102,6 @@ public class WebApplication {
             match.setFinished(true);
             match.setId(12L);
             matchService.updateMatch(match);
-            User usertest2 =  userService.getUser(user1.getUserName(),user1.getPassword());
-            System.out.println("yoo"+ userService.existsUserById(1L));
-            List<Match> x = matchService.getAvailableMatches();
-            Match matchtest = matchService.getMatch(15L);
-            System.out.println("x");
 
         };
     }
