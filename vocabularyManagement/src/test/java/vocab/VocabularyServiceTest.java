@@ -31,39 +31,36 @@ public class VocabularyServiceTest {
 
         // Stubbing
 
-//        User user = new User("Testuser", "password");
-//        Mockito.when(userService.getUser("Testuser", "password")).thenReturn(user);
-//        Mockito.when(userService.addUser("Testuser", "password")).thenReturn(user);
         Book book = new Book();
         book.setName("access 3");
+        book.setId(256L);
         Book book2 = new Book();
-        book.setName("access 2");
+        book2.setName("access 2");
         ArrayList<Book> bookList = new ArrayList<>();
         bookList.add(book);
         bookList.add(book2);
-        Mockito.when(vocabularyService.addBook(book)).thenReturn(book);
-//        Mockito.when(vocabularyService.getBooks()).thenReturn(bookList);
+        Mockito.when(vocabularyService.getBooks()).thenReturn(bookList);
     }
 
     @Test
     public void testAddBook(){
-        //Act
         Book book = new Book();
         book.setName("access 3");
-        Book addedBook = vocabularyService.addBook(book);
+        //Act
+        Boolean addedBook = vocabularyService.addBook(book);
         // Assert
-        Assert.assertNotNull(addedBook);
-        Assert.assertEquals("access 3", addedBook.getName());
-
+        Assert.assertTrue(addedBook);
     }
 
     @Test
     public void testGetBooks(){
+        Long bookId = 256L;
         //Act
         List<Book> bookList = vocabularyService.getBooks();
         // Assert
         Assert.assertNotNull(bookList);
-//        Assert.assertTrue(bookList.contains());
+        Assert.assertEquals("access 2", bookList.get(1).getName());
+        Assert.assertEquals(bookId, bookList.get(0).getId());
 
     }
 }

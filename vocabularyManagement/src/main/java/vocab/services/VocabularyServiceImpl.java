@@ -27,10 +27,15 @@ public class VocabularyServiceImpl implements VocabularyService {
         return this.bookRepository.findAll();
     }
 
+
     @Transactional
     @Override
-    public Book addBook(Book book) {
-        this.bookRepository.save(book);
-        return book;
+    public Boolean addBook(Book book) {
+        try {
+            this.bookRepository.save(book);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

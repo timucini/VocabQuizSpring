@@ -31,18 +31,20 @@ public class UserServiceTest {
 
         // Stubbing
         User user = new User("Testuser", "password");
+        user.setId(123L);
         Mockito.when(userService.getUser("Testuser", "password")).thenReturn(user);
-//        Mockito.when(userService.addUser("Testuser", "password")).thenReturn(user);
     }
 
     @Test
     public void testGetUser(){
+        Long userId = 123L;
         //Act
-        User testuser = userService.getUser("Testuser", "password");
+        User requestedUser = userService.getUser("Testuser", "password");
         // Assert
-        Assert.assertNotNull(testuser);
-        Assert.assertEquals("Testuser", testuser.getUserName());
-        Assert.assertEquals("password", testuser.getPassword());
+        Assert.assertNotNull(requestedUser);
+        Assert.assertEquals("Testuser", requestedUser.getUserName());
+        Assert.assertEquals("password", requestedUser.getPassword());
+        Assert.assertEquals(userId, requestedUser.getId());
 
     }
     @Test
