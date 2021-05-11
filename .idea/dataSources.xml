@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="VocabularyDatabase@localhost" uuid="42e641c0-9e06-4a8c-90d0-3d1c893402a3">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/VocabularyDatabase</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="VocabularyDatabase@localhost [2]" uuid="f8c899b1-47c0-407b-bcd0-11a867baec55">
+    <data-source source="LOCAL" name="VocabularyDatabase@localhost" uuid="0b7c51e1-f196-4c19-9c5a-57abecb99d23">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

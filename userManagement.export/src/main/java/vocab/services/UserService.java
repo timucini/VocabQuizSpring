@@ -2,6 +2,8 @@ package vocab.services;
 
 import vocab.domain.User;
 
+import java.util.List;
+
 /**The following interface provides methods to manage users.
  * @version 0.1
  */
@@ -19,4 +21,6 @@ public interface UserService {
      * @return The method returns a User instance, or null in case of not finding a user with the same username and password.
      */
     public User getUser(String username, String password);
+
+    public List<User> getUsers();
 }

@@ -6,6 +6,7 @@ import vocab.domain.User;
 import vocab.repositories.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -32,5 +33,10 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public User getUser(String username, String password) {
         return userRepository.getUserByUserNameAndPassword(username,password);
+    }
+
+    @Transactional
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 }
