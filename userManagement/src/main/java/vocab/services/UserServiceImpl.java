@@ -3,10 +3,11 @@ package vocab.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vocab.domain.User;
+import vocab.exceptions.BadRequestException;
+import vocab.exceptions.ResourceNotFoundException;
 import vocab.repositories.UserRepository;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -20,23 +21,21 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public Boolean addUser(String username, String password) {
-        User user = new User(username,password);
+    public User addUser(String username, String password) throws BadRequestException {
         try {
-            userRepository.save(user);
-            return true;
+            User user = new User(username,password);
+            return userRepository.save(user);
         } catch (Exception e) {
-            return false;
+            throw new BadRequestException("Invalid request, can't add User");
         }
     }
 
     @Transactional
-    public User getUser(String username, String password) {
-        return userRepository.getUserByUserNameAndPassword(username,password);
-    }
-
-    @Transactional
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public User getUser(String username, String password) throws ResourceNotFoundException {
+        try {
+            return userRepository.getUserByUserNameAndPassword(username,password);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("User not found");
+        }
     }
 }

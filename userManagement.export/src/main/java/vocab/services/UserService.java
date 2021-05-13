@@ -1,8 +1,8 @@
 package vocab.services;
 
 import vocab.domain.User;
-
-import java.util.List;
+import vocab.exceptions.BadRequestException;
+import vocab.exceptions.ResourceNotFoundException;
 
 /**The following interface provides methods to manage users.
  * @version 0.1
@@ -14,13 +14,11 @@ public interface UserService {
      * @param password The required password of the new user.
      * @return The method returns a boolean representing the success of the method.
      */
-    public Boolean addUser(String username, String password);
+    User addUser(String username, String password) throws BadRequestException;
     /**This method is for respective logging a user in.
      * @param username The name of the user.
      * @param password The required password of the user.
      * @return The method returns a User instance, or null in case of not finding a user with the same username and password.
      */
-    public User getUser(String username, String password);
-
-    public List<User> getUsers();
+    User getUser(String username, String password) throws ResourceNotFoundException;
 }

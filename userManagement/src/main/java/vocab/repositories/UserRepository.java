@@ -3,9 +3,10 @@ package vocab.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import vocab.domain.User;
+import vocab.exceptions.ResourceNotFoundException;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    public User getUserByUserNameAndPassword(String username, String password);
+    User getUserByUserNameAndPassword(String username, String password) throws ResourceNotFoundException;
 }
