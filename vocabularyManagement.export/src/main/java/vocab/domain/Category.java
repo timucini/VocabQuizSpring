@@ -52,4 +52,13 @@ public class Category {
         this.translations = translations;
     }
 
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer(name);
+        for (Translation translation : translations) {
+            sb.append(System.lineSeparator());
+            sb.append(translation.toString());
+        }
+        return sb.toString();
+    }
 }
