@@ -1,6 +1,7 @@
 package vocab.services;
 
 import vocab.domain.Book;
+import vocab.domain.Category;
 
 import java.util.List;
 /**This interface is can be used to manage the vocabulary.
@@ -18,4 +19,11 @@ public interface VocabularyService {
      * @param book
      */
     Boolean addBook(Book book);
+
+    /**
+     *
+     * @param id
+     * @return Category
+     */
+    Category getCategory(Long id);
 }
