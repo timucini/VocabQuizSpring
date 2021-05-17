@@ -1,7 +1,5 @@
 package vocab.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity(name = "User")
@@ -26,7 +24,6 @@ public class User {
     @Column(name = "user_name",nullable = false, columnDefinition = "TEXT")
     private String userName;
 
-    @JsonIgnore
     @Column(name = "password",nullable = false, columnDefinition = "TEXT")
     private String password;
 

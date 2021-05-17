@@ -8,8 +8,12 @@ import vocab.domain.User;
 import vocab.services.UserService;
 import vocab.services.UserServiceImpl;
 
+import java.sql.SQLException;
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "api/v1/user")
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -20,19 +24,19 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestParam String username, String password ) {
-        User addedUser =  userService.addUser(username, password);
-        if (addedUser != null) {
+    public ResponseEntity<User> addUser(@RequestBody User user ) {
+        User addedUser = null;
+        try {
+            addedUser = userService.addUser(user.getUserName(), user.getPassword());
             return new ResponseEntity<>(addedUser, HttpStatus.OK);
-        }
-        else {
+        } catch (SQLException throwables) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/get")
-    public ResponseEntity<User> getUser(@RequestParam String username, String password) {
-        User foundUser = userService.getUser(username,password);
+    public ResponseEntity<User> getUser(@RequestParam String userName, String password) {
+        User foundUser = userService.getUser(userName, password);
         if (foundUser != null) {
             return new ResponseEntity<>(foundUser, HttpStatus.OK);
         }
@@ -44,6 +48,11 @@ public class UserController {
     @GetMapping
     public String hello() {
         return "Hello World";
+    }
+
+    @GetMapping("/users")
+    public List<User> getUser() {
+        return userService.getUsers();
     }
 
 
