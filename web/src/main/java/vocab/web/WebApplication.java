@@ -103,11 +103,16 @@ public class WebApplication {
             match.setId(12L);
             matchService.updateMatch(match);
             User usertest2 =  userService.getUser(user1.getUserName(),user1.getPassword());
-            System.out.println("yoo"+ userService.existsUserById(1L));
             List<Match> x = matchService.getAvailableMatches();
             Match matchtest = matchService.getMatch(15L);
             System.out.println("x");
 
+            VocabularyInputScript inputScript = new VocabularyInputScript();
+            // Input Books from Script
+            List<Book> books = VocabularyInputScript.createBooks();
+            for (Book book : books) {
+                vocabularyService.addBook(book);
+            }
         };
     }
 }

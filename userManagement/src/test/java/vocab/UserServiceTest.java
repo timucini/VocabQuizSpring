@@ -2,20 +2,17 @@ package vocab;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
 import vocab.domain.User;
 import vocab.repositories.UserRepository;
 import vocab.services.UserService;
 import vocab.services.UserServiceImpl;
+
+import java.sql.SQLException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -48,7 +45,7 @@ public class UserServiceTest {
 
     }
     @Test
-    public void testAddUser(){
+    public void testAddUser() throws SQLException {
         //Act
         User userCreated = userService.addUser("Testuser", "password");
         // Assert
