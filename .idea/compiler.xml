@@ -6,19 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="web" />
         <module name="matchManagement" />
-        <module name="userManagement.export" />
-        <module name="vocabularyManagement.export" />
         <module name="userManagement" />
+        <module name="web" />
         <module name="matchManagement.export" />
+        <module name="vocabularyManagement.export" />
         <module name="vocabularyManagement" />
-      </profile>
-      <profile name="Annotation profile for VocabQuizSpring" enabled="true">
-        <sourceOutputDir name="../target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="userManagement" />
+        <module name="userManagement.export" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

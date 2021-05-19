@@ -2,7 +2,6 @@ package vocab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vocab.domain.*;
@@ -14,7 +13,8 @@ import vocab.services.VocabularyServiceImpl;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/match")
+@RequestMapping(path = "api/v1/match")
+@CrossOrigin("*")
 public class MatchController {
 
     private final MatchService matchService;
