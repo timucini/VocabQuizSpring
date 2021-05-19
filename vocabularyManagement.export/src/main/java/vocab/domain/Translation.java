@@ -46,4 +46,9 @@ public class Translation {
         this.stringTo = stringTo;
     }
 
+    @Override
+    public String toString() {
+        return stringFrom+";"+stringTo;
+    }
+
 }

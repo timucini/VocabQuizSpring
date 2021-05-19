@@ -58,4 +58,14 @@ public class Book {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer(name);
+        for (Category category : categories) {
+            sb.append(System.lineSeparator());
+            sb.append(category.toString());
+        }
+        return sb.toString();
+    }
 }
