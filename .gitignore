@@ -42,5 +42,8 @@ buildNumber.properties
 .vscode/
 .classpath
 .project
-.idea/
-**/node_modules
+
+
+## Frontend
+/node_modules
+node_modules/

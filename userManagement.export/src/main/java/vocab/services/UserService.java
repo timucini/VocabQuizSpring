@@ -1,6 +1,11 @@
 package vocab.services;
 
 import vocab.domain.User;
+import vocab.exceptions.BadRequestException;
+import vocab.exceptions.ResourceNotFoundException;
+
+import java.sql.SQLException;
+import java.util.List;
 
 /**The following interface provides methods to manage users.
  * @version 0.1
@@ -12,11 +17,13 @@ public interface UserService {
      * @param password The required password of the new user.
      * @return The method returns a boolean representing the success of the method.
      */
-    public User addUser(String username, String password);
+    User addUser(String username, String password) throws SQLException;
     /**This method is for respective logging a user in.
      * @param username The name of the user.
      * @param password The required password of the user.
      * @return The method returns a User instance, or null in case of not finding a user with the same username and password.
      */
-    public User getUser(String username, String password);
+    User getUser(String username, String password) throws ResourceNotFoundException;
+
+    List<User> getUsers();
 }
