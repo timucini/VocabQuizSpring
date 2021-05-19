@@ -38,4 +38,9 @@ public class VocabularyServiceImpl implements VocabularyService {
             return false;
         }
     }
+
+    @Transactional
+    public Category getCategory(Long id) {
+        return categoryRepository.getCategoryById(id);
+    }
 }
