@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+function MatchLobby(props) {
 
-const AvailableMatches = () => {
     const [matches, setMatches] = useState([]);
 
     const fetchAvailableMatches = () => {
@@ -14,22 +14,22 @@ const AvailableMatches = () => {
     useEffect(() => {
         fetchAvailableMatches();
     }, []);
-
-    return matches.map((match,index) => {
+    
+    const matchList = matches.map((match,index) => {
         return(
             <div key={index}>
                 <p>Match-Id: {match.id}</p>
                 <p>Player in Match: {match.player1.userName}</p>
                 <p>Book: {match.book.name}</p>
+                <button onClick={() => props.setMatchState(match)}>Joinen</button>
             </div>
         )
     })
-};
 
-    function MatchLobby(props) {
     return(
         <div className = "MatchLobby">
-            <AvailableMatches />
+            <div>Hello {props.user.userName}</div>
+            {matchList}
             <button onClick={() => props.logOut()}>Ausloggen</button>
         </div>
     )

@@ -15,7 +15,7 @@ function RegisterForm(props) {
         }, (error) => {
           console.log(console.log(error));
         });
-      };
+    };
     
 
     return(
