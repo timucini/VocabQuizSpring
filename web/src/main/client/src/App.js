@@ -59,13 +59,13 @@ export default function App() {
   return (
     <div className="App">
         {loggedIn && !mactchInProgress && 
-         <MatchLobby user={user} logOut={loginState => logOutUser()} setMatchState={matchstate => startMatch(matchstate) } />         
+         <MatchLobby user={user} logOut={() => logOutUser()} setMatchState={matchstate => startMatch(matchstate) } />         
         }
         {loggedIn && mactchInProgress && !matchfinished &&
-          <Match match={match} finishMatch={endMatchState => finishMatch()}/>
+          <Match match={match} finishMatch={() => finishMatch()}/>
         }
         {loggedIn && mactchInProgress && matchfinished &&
-          <Result match={match} endMatch={endMatchState => endMatch()}/>
+          <Result match={match} endMatch={() => endMatch()}/>
         }
         {!loggedIn && !register && !login &&
           <button onClick={() => showLoginForm()}>Einloggen</button>

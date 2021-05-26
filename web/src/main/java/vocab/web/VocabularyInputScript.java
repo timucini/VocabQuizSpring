@@ -1,16 +1,14 @@
 package vocab.web;
 
+import vocab.domain.Book;
+import vocab.domain.Category;
+import vocab.domain.Translation;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.BufferedReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-
-import jdk.jfr.Description;
-import vocab.domain.*;
+import java.util.*;
 
 public final class VocabularyInputScript {
 
@@ -39,7 +37,7 @@ public final class VocabularyInputScript {
             string = string.replaceAll("}", "");
             string = string.replaceAll("\\{", "");
             String[] tempArray = string.split(" : ");
-            translations.add(new Translation(tempArray[0], tempArray[1]));
+            translations.add(new Translation(Arrays.asList(tempArray[0],"test"), Arrays.asList(tempArray[1],"test2")));
         }
         return translations;
     }

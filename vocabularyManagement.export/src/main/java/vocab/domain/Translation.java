@@ -1,6 +1,8 @@
 package vocab.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="translation")
@@ -8,11 +10,14 @@ public class Translation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String stringFrom;
-    private String stringTo;
 
+    @ElementCollection
+    private List<String> stringFrom = new ArrayList<>();
 
-    public Translation(String stringFrom, String stringTo) {
+    @ElementCollection
+    private List<String> stringTo = new ArrayList<>();
+
+    public Translation(List<String> stringFrom, List<String> stringTo) {
         this.stringFrom = stringFrom;
         this.stringTo = stringTo;
     }
@@ -30,25 +35,28 @@ public class Translation {
         this.id = id;
     }
 
-    public String getStringFrom() {
+    public List<String> getStringFrom() {
         return stringFrom;
     }
 
-    public void setStringFrom(String stringFrom) {
+    public void setStringFrom(List<String> stringFrom) {
         this.stringFrom = stringFrom;
     }
 
-    public String getStringTo() {
+    public List<String> getStringTo() {
         return stringTo;
     }
 
-    public void setStringTo(String stringTo) {
+    public void setStringTo(List<String> stringTo) {
         this.stringTo = stringTo;
     }
 
     @Override
     public String toString() {
-        return stringFrom+";"+stringTo;
+        return "Translation{" +
+                "id=" + id +
+                ", stringFrom=" + stringFrom +
+                ", stringTo=" + stringTo +
+                '}';
     }
-
 }
