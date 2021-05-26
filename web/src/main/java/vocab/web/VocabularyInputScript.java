@@ -36,10 +36,21 @@ public final class VocabularyInputScript {
     private static List<Translation> createTranslations(List<String> input){
         List<Translation> translations = new ArrayList<Translation>();
         for (String string : input){
-            string = string.replaceAll("}", "");
+            string = string.split("\\{\\{\\{}}}")[0];
             string = string.replaceAll("\\{", "");
+            string = string.replaceAll("}, ", "},");
             String[] tempArray = string.split(" : ");
-            translations.add(new Translation(tempArray[0], tempArray[1]));
+            String[] from = tempArray[0].split("},");
+            String[] to = tempArray[1].split("},");
+            List<TranslationEntry> fromList = new ArrayList<>();
+            for (String f: from) {
+                fromList.add(new TranslationEntry(f.replaceAll("}","")));
+            }
+            List<TranslationEntry> toList = new ArrayList<>();
+            for (String t: to) {
+                toList.add(new TranslationEntry(t.replaceAll("}","")));
+            }
+            translations.add(new Translation(fromList, toList));
         }
         return translations;
     }
@@ -50,13 +61,22 @@ public final class VocabularyInputScript {
             List<String> input = readFile(file);
             String[] description = input.get(0).split("}\\{");
             String bookName = description[3].replaceAll("}", "").replaceAll("\\{", "");
+            String bookFrom = description[1].replaceAll("}", "").replaceAll("\\{", "");
+            String bookTo = description[2].replaceAll("}", "").replaceAll("\\{", "");
             String categoryName = description[0].replaceAll("}", "").replaceAll("\\{", "");
             List<Translation> translations = createTranslations(input.subList(1, input.size()));
             Category category = new Category(categoryName, translations);
-            books.put(bookName, new Book());
-            Book newBook = books.get(bookName);
-            newBook.setName(bookName);
-            newBook.getCategories().add(category);
+            if (books.containsKey(bookName)) {
+                Book book = books.get(bookName);
+                book.getCategories().add(category);
+            } else {
+                Book re = books.put(bookName, new Book());
+                Book newBook = books.get(bookName);
+                newBook.setName(bookName);
+                newBook.setFrom(bookFrom);
+                newBook.setTo(bookTo);
+                newBook.getCategories().add(category);
+            }
         }
         return new ArrayList<Book>(books.values());
     }

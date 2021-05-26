@@ -3,6 +3,7 @@ package vocab.services;
 import vocab.domain.Book;
 import vocab.domain.Category;
 
+import java.io.File;
 import java.util.List;
 /**This interface is can be used to manage the vocabulary.
  * @version 0.1
@@ -15,11 +16,10 @@ public interface VocabularyService {
     List<Book> getBooks();
 
     /**
-     * This method can be used to insert a book into the Database
-     * @param book
+     * This method can be used to insert a file into the Database
+     * @param file
      */
-    Boolean addBook(Book book);
-
+    Boolean addFile(File file);
     /**
      *
      * @param id

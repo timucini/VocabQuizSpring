@@ -18,6 +18,8 @@ public class Book {
     private Long id;
 
     private String name;
+    private String from;
+    private String to;
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -26,13 +28,14 @@ public class Book {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Category> categories =  new ArrayList<>();
 
-    public Book(String name, List<Category> categories) {
+    public Book(String name, String from, String to, List<Category> categories) {
         this.name = name;
+        this.from = from;
+        this.to = to;
         this.categories = categories;
     }
 
     public Book() {
-
     }
 
     public Long getId() {
@@ -51,6 +54,22 @@ public class Book {
         this.name = name;
     }
 
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
     public List<Category> getCategories() {
         return categories;
     }
@@ -62,6 +81,8 @@ public class Book {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer(name);
+        sb.append(System.lineSeparator());
+        sb.append(from+" - "+to);
         for (Category category : categories) {
             sb.append(System.lineSeparator());
             sb.append(category.toString());

@@ -1,6 +1,8 @@
 package vocab.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="translation")
@@ -8,19 +10,23 @@ public class Translation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String stringFrom;
-    private String stringTo;
 
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<TranslationEntry> toList =  new ArrayList<>();
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<TranslationEntry> fromList =  new ArrayList<>();
 
-    public Translation(String stringFrom, String stringTo) {
-        this.stringFrom = stringFrom;
-        this.stringTo = stringTo;
+    public Translation(List<TranslationEntry> fromList, List<TranslationEntry> toList) {
+        this.toList = toList;
+        this.fromList = fromList;
     }
 
     public Translation() {
-
     }
-
 
     public Long getId() {
         return id;
@@ -30,25 +36,37 @@ public class Translation {
         this.id = id;
     }
 
-    public String getStringFrom() {
-        return stringFrom;
+    public List<TranslationEntry> getToList() {
+        return toList;
     }
 
-    public void setStringFrom(String stringFrom) {
-        this.stringFrom = stringFrom;
+    public void setToList(List<TranslationEntry> toList) {
+        this.toList = toList;
     }
 
-    public String getStringTo() {
-        return stringTo;
+    public List<TranslationEntry> getFromList() {
+        return fromList;
     }
 
-    public void setStringTo(String stringTo) {
-        this.stringTo = stringTo;
+    public void setFromList(List<TranslationEntry> fromList) {
+        this.fromList = fromList;
     }
 
     @Override
     public String toString() {
-        return stringFrom+";"+stringTo;
+        StringBuffer fromBuffer = new StringBuffer();
+        StringBuffer toBuffer = new StringBuffer();
+        for (TranslationEntry translationEntry: fromList) {
+            fromBuffer.append(translationEntry.toString());
+        }
+        for (TranslationEntry translationEntry: toList) {
+            toBuffer.append(translationEntry.toString());
+        }
+        StringBuffer sb = new StringBuffer();
+        sb.append(fromBuffer);
+        sb.append(" - ");
+        sb.append(toBuffer);
+        return sb.toString();
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import vocab.domain.*;
 import vocab.services.*;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class WebApplication {
 
             User usertest =  userService.getUser(user1.getUserName(),user1.getPassword());
             System.out.println(usertest.toString());
-
+/**
             Translation translation1 = new Translation("From1","to1");
             Translation translation2 = new Translation("From2","to2");
             List<Translation> translationList1 = Arrays.asList(translation1,translation2);
@@ -58,7 +59,13 @@ public class WebApplication {
             Book book2 = new Book("book1",categoryList2);
             vocabularyService.addBook(book1);
             vocabularyService.addBook(book2);
-
+**/
+            //Input-Test
+            String resourceString = "\\web\\src\\main\\resources\\vocabulary_input";
+            File resourceDir = new File(System.getProperty("user.dir")+resourceString);
+            for (File file : resourceDir.listFiles()){
+                vocabularyService.addFile(file);
+            }
             //Match-Test
             // create One-Player Match
             User userPlayer1 = userService.getUser("User1","password");
@@ -106,13 +113,14 @@ public class WebApplication {
             List<Match> x = matchService.getAvailableMatches();
             Match matchtest = matchService.getMatch(15L);
             System.out.println("x");
-
+/**
             VocabularyInputScript inputScript = new VocabularyInputScript();
             // Input Books from Script
             List<Book> books = VocabularyInputScript.createBooks();
             for (Book book : books) {
                 vocabularyService.addBook(book);
             }
+ **/
         };
     }
 }
