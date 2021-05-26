@@ -1,6 +1,5 @@
 package vocab.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
@@ -19,6 +18,10 @@ public class Book {
 
     private String name;
 
+    private String LanguageFrom;
+
+    private String LanguageTo;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)
@@ -26,8 +29,10 @@ public class Book {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Category> categories =  new ArrayList<>();
 
-    public Book(String name, List<Category> categories) {
+    public Book(String name, String languageFrom, String languageTo, List<Category> categories) {
         this.name = name;
+        LanguageFrom = languageFrom;
+        LanguageTo = languageTo;
         this.categories = categories;
     }
 
@@ -59,13 +64,30 @@ public class Book {
         this.categories = categories;
     }
 
+    public String getLanguageFrom() {
+        return LanguageFrom;
+    }
+
+    public void setLanguageFrom(String languageFrom) {
+        LanguageFrom = languageFrom;
+    }
+
+    public String getLanguageTo() {
+        return LanguageTo;
+    }
+
+    public void setLanguageTo(String languageTo) {
+        LanguageTo = languageTo;
+    }
+
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer(name);
-        for (Category category : categories) {
-            sb.append(System.lineSeparator());
-            sb.append(category.toString());
-        }
-        return sb.toString();
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", LanguageFrom='" + LanguageFrom + '\'' +
+                ", LanguageTo='" + LanguageTo + '\'' +
+                ", categories=" + categories +
+                '}';
     }
 }
