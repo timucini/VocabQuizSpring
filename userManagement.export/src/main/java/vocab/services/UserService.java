@@ -1,11 +1,9 @@
 package vocab.services;
 
 import vocab.domain.User;
-import vocab.exceptions.BadRequestException;
 import vocab.exceptions.ResourceNotFoundException;
 
 import java.sql.SQLException;
-import java.util.List;
 
 /**The following interface provides methods to manage users.
  * @version 0.1
@@ -25,5 +23,5 @@ public interface UserService {
      */
     User getUser(String username, String password) throws ResourceNotFoundException;
 
-    List<User> getUsers();
+    User getUserById(Long id) throws ResourceNotFoundException;
 }

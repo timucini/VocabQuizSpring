@@ -8,7 +8,6 @@ import vocab.repositories.UserRepository;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -41,7 +40,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Transactional
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public User getUserById(Long id) throws ResourceNotFoundException {
+        try {
+            return userRepository.getUserById(id);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("User not found");
+        }
     }
+
 }

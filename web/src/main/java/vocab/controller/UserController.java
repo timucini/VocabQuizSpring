@@ -9,7 +9,6 @@ import vocab.services.UserService;
 import vocab.services.UserServiceImpl;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/user")
@@ -44,16 +43,4 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-
-    @GetMapping
-    public String hello() {
-        return "Hello World";
-    }
-
-    @GetMapping("/users")
-    public List<User> getUser() {
-        return userService.getUsers();
-    }
-
-
 }

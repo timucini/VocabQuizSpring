@@ -33,4 +33,7 @@ public interface VocabularyService {
      * @return Category
      */
     Category getCategory(Long id);
+
+
+    Book getBook(Long id);
 }

@@ -5,10 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vocab.domain.*;
-import vocab.services.MatchService;
-import vocab.services.MatchServiceImpl;
-import vocab.services.VocabularyService;
-import vocab.services.VocabularyServiceImpl;
+import vocab.services.*;
 
 import java.util.List;
 
@@ -19,47 +16,64 @@ public class MatchController {
 
     private final MatchService matchService;
     private final VocabularyService vocabularyService;
+    private final UserService userService;
 
     @Autowired
-    public MatchController(MatchServiceImpl matchService, VocabularyServiceImpl vocabularyService) {
+    public MatchController(MatchServiceImpl matchService, VocabularyServiceImpl vocabularyService, UserServiceImpl userService) {
         this.matchService = matchService;
         this.vocabularyService = vocabularyService;
+        this.userService = userService;
     }
 
     @GetMapping("/matches")
-    public ResponseEntity<List<Match>> getMatches() {
-        List<Match> matches =  matchService.getAvailableMatches();
-        if (matches != null) {
-            return new ResponseEntity<>(matches, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<List<Match>> getMatches(@RequestParam String user_id) {
+        try{
+            User user = userService.getUserById(Long.parseLong(user_id));
+            List<Match> matches =  matchService.getAvailableMatches(user);
+            if (matches != null) {
+                return new ResponseEntity<>(matches, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception exception) {
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
     }
 
-    // sollten eig wirklich keine ganzen User rüberschicken sondern nur die userid oder username zb, anstatt im frontend nen ganzen User mitschicken zu müssen im POST Request
+
     @PostMapping("/create")
-    public ResponseEntity<Match> createMatch(@RequestParam User user, @RequestParam Book bookName){
-        Match createdMatch = matchService.createMatch(user, bookName);
-        if (createdMatch != null) {
-            return new ResponseEntity<>(createdMatch, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Match> createMatch(@RequestParam String user_id, String book_id){
+        try {
+            User user = userService.getUserById(Long.parseLong(user_id));
+            Book book = vocabularyService.getBook(Long.parseLong(book_id));
+            Match createdMatch = matchService.createMatch(user, book);
+            if (createdMatch != null) {
+                return new ResponseEntity<>(createdMatch, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception exception) {
+        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
     }
 
-    //hier auch besser nur id statt ganzen user
     @PostMapping("/join")
-    public ResponseEntity<Match> joinMatch(@RequestParam User user, @RequestParam Long match_id) {
-        Match joinedMatch = matchService.joinMatch(user, match_id);
-        if (joinedMatch != null) {
-            return new ResponseEntity<>(joinedMatch, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Match> joinMatch(@RequestParam String user_id, String match_id) {
+        try {
+            User user = userService.getUserById(Long.parseLong(user_id));
+            Match joinedMatch = matchService.joinMatch(user, Long.parseLong(match_id));
+            if (joinedMatch != null) {
+                return new ResponseEntity<>(joinedMatch, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception exception) {
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping(value = "/round")
-    public ResponseEntity<Round> startRound(@RequestParam Long category_id, @RequestParam Long match_id) {
+    public ResponseEntity<Round> startRound(@RequestBody Long category_id, Long match_id) {
         Match match = matchService.getMatch(match_id);
         Round round = new Round();
         Category category = vocabularyService.getCategory(category_id);
@@ -74,7 +88,7 @@ public class MatchController {
     }
 
     @GetMapping("/answer")
-    public ResponseEntity<Boolean> submitAnswer(@RequestParam String answer, @RequestParam Question question, @RequestParam Long match_id, @RequestParam User user) {
+    public ResponseEntity<Boolean> submitAnswer(@RequestParam String answer, Question question, Long match_id, User user) {
         Boolean answerIsCorrect = matchService.submitAnswer(answer, question, match_id, user);
         if (answerIsCorrect != null) {
             return new ResponseEntity<>(answerIsCorrect, HttpStatus.OK);

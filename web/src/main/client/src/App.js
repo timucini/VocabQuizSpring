@@ -42,8 +42,10 @@ export default function App() {
   }
 
   function startMatch(matchState) {
-    setMatchInProgress(true);
+    console.log("Matchstate;")
+    console.log(matchState)
     setMatch(matchState);
+    setMatchInProgress(true);
   }
 
   function finishMatch() {

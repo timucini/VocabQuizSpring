@@ -9,4 +9,6 @@ import vocab.exceptions.ResourceNotFoundException;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User getUserByUserNameAndPassword(String username, String password) throws ResourceNotFoundException;
+
+    User getUserById(Long id) throws ResourceNotFoundException;
 }

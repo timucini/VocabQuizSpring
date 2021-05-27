@@ -77,7 +77,7 @@ public class WebApplication {
 
             // update match
             // add player
-            Match match = matchService.getAvailableMatches().get(0);
+            Match match = matchService.getAvailableMatches(userPlayer1).get(0);
             User userPlayer2 = userService.getUser("User2","password");
             match.setPlayer2(userPlayer2);
 
@@ -111,10 +111,6 @@ public class WebApplication {
             match.setFinished(true);
             match.setId(12L);
             matchService.updateMatch(match);
-            User usertest2 =  userService.getUser(user1.getUserName(),user1.getPassword());
-            List<Match> x = matchService.getAvailableMatches();
-            Match matchtest = matchService.getMatch(15L);
-            System.out.println("x");
 
             String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"vocabulary_input";
             File resourceDir = new File(System.getProperty("user.dir")+resourceString);

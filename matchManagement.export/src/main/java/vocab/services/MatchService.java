@@ -28,7 +28,7 @@ public interface MatchService {
     /**This method can be used to get all matches with only one user.
      * @return The method returns a List of matches representing all matches with only one user.
      */
-    List<Match> getAvailableMatches();
+    List<Match> getAvailableMatches(User user);
 
     /**
      *

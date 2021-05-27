@@ -10,7 +10,6 @@ import vocab.repositories.CategoryRepository;
 
 import javax.transaction.Transactional;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -78,5 +77,10 @@ public class VocabularyServiceImpl implements VocabularyService {
     @Transactional
     public Category getCategory(Long id) {
         return categoryRepository.getCategoryById(id);
+    }
+
+    @Transactional
+    public Book getBook(Long id) {
+        return bookRepository.getBookById(id);
     }
 }

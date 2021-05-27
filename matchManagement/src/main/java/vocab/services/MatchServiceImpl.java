@@ -6,6 +6,7 @@ import vocab.domain.*;
 import vocab.repositories.MatchRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -19,6 +20,9 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public Match createMatch(User user,Book book) {
         Match match= new Match(user,book);
+        match.setFinished(false);
+        match.setScorePlayer1(0);
+        match.setScorePlayer2(2);
         matchRepository.save(match);
         return match;
     }
@@ -40,8 +44,13 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<Match> getAvailableMatches() {
-         return matchRepository.findAll();
+    public List<Match> getAvailableMatches(User user) {
+         List<Match> filteredMatches = matchRepository
+                 .findAll()
+                 .stream()
+                 .filter(m -> m.getPlayer2() == null && m.getFinished() == false && m.getPlayer1() != user)
+                 .collect(Collectors.toList());
+         return filteredMatches;
     }
 
     @Override
