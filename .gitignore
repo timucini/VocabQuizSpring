@@ -48,3 +48,10 @@ buildNumber.properties
 ## Frontend
 /node_modules
 node_modules/
+web/src/main/client/package-lock.json
+.idea/libraries/Maven__antlr_antlr_2_7_7.xml
+.idea/libraries/Maven__antlr_antlr_2_7_7.xml
+.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml
+.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml
+.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml
+.idea/libraries/Maven__com_zaxxer_HikariCP_3_4_5.xml

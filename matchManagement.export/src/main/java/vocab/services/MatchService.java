@@ -1,8 +1,7 @@
 package vocab.services;
 
-import vocab.domain.Book;
-import vocab.domain.Match;
-import vocab.domain.User;
+import vocab.domain.*;
+
 import java.util.List;
 
 /**This interface provides methods to manage matches.
@@ -30,4 +29,26 @@ public interface MatchService {
      * @return The method returns a List of matches representing all matches with only one user.
      */
     List<Match> getAvailableMatches();
+
+    /**
+     *
+     * @return
+     */
+    Match joinMatch(User user, Long match_id);
+
+    /**
+     *
+     * @param answer
+     * @param question
+     * @param match_id
+     * @param user
+     * @return
+     */
+    Boolean submitAnswer(String answer, Question question, Long match_id, User user);
+
+    /**
+     *
+     * @param match_id
+     */
+    void finishMatch(Long match_id);
 }
