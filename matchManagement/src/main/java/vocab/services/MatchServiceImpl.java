@@ -2,9 +2,7 @@ package vocab.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vocab.domain.Book;
-import vocab.domain.Match;
-import vocab.domain.User;
+import vocab.domain.*;
 import vocab.repositories.MatchRepository;
 
 import java.util.List;
@@ -44,6 +42,37 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public List<Match> getAvailableMatches() {
          return matchRepository.findAll();
+    }
+
+    @Override
+    public Match joinMatch(User user, Long match_id) {
+        Match match = this.getMatch(match_id);
+        match.setPlayer2(user);
+        Boolean matchUpdated = this.updateMatch(match);
+        if (matchUpdated) {
+            return match;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean submitAnswer(String answer, Question question, Long match_id, User user) {
+        Boolean isAnswerCorrect = answer.equals(question.getCorrectAnswer());
+        //fehlt nicht noch die Verbindung zur question?
+        Answer answerObject = new Answer(answer, isAnswerCorrect, user);
+        if (isAnswerCorrect) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void finishMatch(Long match_id) {
+        Match match = this.getMatch(match_id);
+        match.setFinished(true);
+        this.updateMatch(match);
     }
 
 
