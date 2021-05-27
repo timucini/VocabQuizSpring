@@ -3,6 +3,7 @@ package vocab.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="category")
@@ -54,11 +55,26 @@ public class Category {
 
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer(name);
+        StringBuffer sb = new StringBuffer("<<Category>>");
+        sb.append(System.lineSeparator());
+        sb.append(name);
         for (Translation translation : translations) {
             sb.append(System.lineSeparator());
-            sb.append(translation.toString());
+            sb.append("   "+translation.toString());
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return name.equals(category.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

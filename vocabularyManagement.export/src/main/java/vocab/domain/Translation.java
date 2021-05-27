@@ -3,6 +3,7 @@ package vocab.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="translation")
@@ -53,10 +54,31 @@ public class Translation {
 
     @Override
     public String toString() {
-        return "Translation{" +
-                "id=" + id +
-                ", stringFrom=" + stringFrom +
-                ", stringTo=" + stringTo +
-                '}';
+        StringBuffer fromBuffer = new StringBuffer();
+        StringBuffer toBuffer = new StringBuffer();
+        for (String string: stringFrom) {
+            fromBuffer.append("<"+string+">");
+        }
+        for (String string: stringTo) {
+            toBuffer.append("<"+string+">");
+        }
+        StringBuffer sb = new StringBuffer();
+        sb.append(fromBuffer);
+        sb.append(" - ");
+        sb.append(toBuffer);
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Translation that = (Translation) o;
+        return stringFrom.equals(that.stringFrom) && stringTo.equals(that.stringTo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stringFrom, stringTo);
     }
 }

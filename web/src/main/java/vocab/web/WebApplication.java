@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import vocab.domain.*;
 import vocab.services.*;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class WebApplication {
             List<Translation> translationList4 = Arrays.asList(translation7,translation8);
             Category category4 = new Category("category4",translationList4);
             List<Category> categoryList2 = Arrays.asList(category3,category4);
-            Book book2 = new Book("book1","Deutsch","English",categoryList2);
+            Book book2 = new Book("book2","Deutsch","English",categoryList2);
             vocabularyService.addBook(book1);
             vocabularyService.addBook(book2);
 
@@ -115,13 +116,18 @@ public class WebApplication {
             Match matchtest = matchService.getMatch(15L);
             System.out.println("x");
 
-            VocabularyInputScript inputScript = new VocabularyInputScript();
+            String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"vocabulary_input";
+            File resourceDir = new File(System.getProperty("user.dir")+resourceString);
+
             // Input Books from Script
-            List<Book> books = VocabularyInputScript.createBooks();
+            /**
+            List<Book> books = VocabularyInputScript.parseFilesToLibrary(resourceDir);
             for (Book book : books) {
                 vocabularyService.addBook(book);
+            }**/
+            for (File file : resourceDir.listFiles()){
+                vocabularyService.addFile(file);
             }
-
         };
     }
 }

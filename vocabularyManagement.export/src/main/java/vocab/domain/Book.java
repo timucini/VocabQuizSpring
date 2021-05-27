@@ -8,6 +8,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="book")
@@ -18,9 +19,9 @@ public class Book {
 
     private String name;
 
-    private String LanguageFrom;
+    private String languageFrom;
 
-    private String LanguageTo;
+    private String languageTo;
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -31,8 +32,8 @@ public class Book {
 
     public Book(String name, String languageFrom, String languageTo, List<Category> categories) {
         this.name = name;
-        LanguageFrom = languageFrom;
-        LanguageTo = languageTo;
+        this.languageFrom = languageFrom;
+        this.languageTo = languageTo;
         this.categories = categories;
     }
 
@@ -65,29 +66,45 @@ public class Book {
     }
 
     public String getLanguageFrom() {
-        return LanguageFrom;
+        return languageFrom;
     }
 
     public void setLanguageFrom(String languageFrom) {
-        LanguageFrom = languageFrom;
+        this.languageFrom = languageFrom;
     }
 
     public String getLanguageTo() {
-        return LanguageTo;
+        return languageTo;
     }
 
     public void setLanguageTo(String languageTo) {
-        LanguageTo = languageTo;
+        this.languageTo = languageTo;
     }
 
     @Override
     public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", LanguageFrom='" + LanguageFrom + '\'' +
-                ", LanguageTo='" + LanguageTo + '\'' +
-                ", categories=" + categories +
-                '}';
+        StringBuffer sb = new StringBuffer("<<Book>>");
+        sb.append(System.lineSeparator());
+        sb.append(name);
+        sb.append(System.lineSeparator());
+        sb.append(languageFrom+" - "+languageTo);
+        for (Category category : categories) {
+            sb.append(System.lineSeparator());
+            sb.append(category.toString());
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return name.equals(book.name) && languageFrom.equals(book.languageFrom) && languageTo.equals(book.languageTo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, languageFrom, languageTo);
     }
 }
