@@ -49,13 +49,10 @@ public class MatchController {
 
     //hier auch besser nur id statt ganzen user
     @PostMapping("/join")
-    public ResponseEntity<Boolean> joinMatch(@RequestParam User user, @RequestParam Long match_id) {
-        Match match = matchService.getMatch(match_id);
-        match.setPlayer2(user);
-        Boolean matchUpdated = matchService.updateMatch(match);
-        boolean playerSetSucceed = match.getPlayer2().getId().equals(user.getId());
-        if (matchUpdated != null && playerSetSucceed) {
-            return new ResponseEntity<>(matchUpdated, HttpStatus.OK);
+    public ResponseEntity<Match> joinMatch(@RequestParam User user, @RequestParam Long match_id) {
+        Match joinedMatch = matchService.joinMatch(user, match_id);
+        if (joinedMatch != null) {
+            return new ResponseEntity<>(joinedMatch, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
@@ -77,13 +74,18 @@ public class MatchController {
     }
 
     @GetMapping("/answer")
-    public ResponseEntity<Boolean> submitAnswer(@RequestParam String answer) {
-        return new ResponseEntity<>(true, HttpStatus.OK);
+    public ResponseEntity<Boolean> submitAnswer(@RequestParam String answer, @RequestParam Question question, @RequestParam Long match_id, @RequestParam User user) {
+        Boolean answerIsCorrect = matchService.submitAnswer(answer, question, match_id, user);
+        if (answerIsCorrect != null) {
+            return new ResponseEntity<>(answerIsCorrect, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
-    private void finishMatch(Match match) {
-        match.setFinished(true);
-        matchService.updateMatch(match);
+    @GetMapping("/finish")
+    private void finishMatch(@RequestParam Long match_id) {
+        matchService.finishMatch(match_id);
     }
 
 }
