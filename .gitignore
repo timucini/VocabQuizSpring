@@ -43,7 +43,8 @@ buildNumber.properties
 .classpath
 .project
 .idea/
-
+.idea
+.idea/*
 
 ## Frontend
 /node_modules
