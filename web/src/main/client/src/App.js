@@ -5,6 +5,7 @@ import LoginForm from './components/LoginForm';
 import MatchLobby from './components/MatchLobby';
 import Match from './components/Match';
 import Result from './components/Result';
+import CreateMatch from './components/CreateMatch';
 
 export default function App() {
 
@@ -23,6 +24,7 @@ export default function App() {
 
   const [matchfinished, setMatchFinished] = useState(false);
 
+  const [createMatch, setCreateMatch] = useState(false);
 
   function showLoginForm() {
     setLoginForm(true);
@@ -60,11 +62,14 @@ export default function App() {
 
   return (
     <div className="App">
-        {loggedIn && !mactchInProgress && 
-         <MatchLobby user={user} logOut={() => logOutUser()} setMatchState={matchstate => startMatch(matchstate) } />         
+        {loggedIn && !mactchInProgress && !createMatch &&
+         <MatchLobby user={user} logOut={() => logOutUser()} setMatchState={matchstate => startMatch(matchstate)} setCreateState={createState => setCreateMatch(createState)} />         
+        }
+        {loggedIn && !mactchInProgress && createMatch &&
+         <CreateMatch user={user} logOut={() => logOutUser()} setMatchState={matchstate => startMatch(matchstate) } setCreateState={createState => setCreateMatch(createState)} />         
         }
         {loggedIn && mactchInProgress && !matchfinished &&
-          <Match match={match} finishMatch={() => finishMatch()}/>
+          <Match match={match} user={user} finishMatch={() => finishMatch()}/>
         }
         {loggedIn && mactchInProgress && matchfinished &&
           <Result match={match} endMatch={() => endMatch()}/>
