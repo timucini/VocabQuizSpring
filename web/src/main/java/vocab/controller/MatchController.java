@@ -73,17 +73,21 @@ public class MatchController {
     }
 
     @PostMapping(value = "/round")
-    public ResponseEntity<Round> startRound(@RequestBody Long category_id, Long match_id) {
-        Match match = matchService.getMatch(match_id);
-        Round round = new Round();
-        Category category = vocabularyService.getCategory(category_id);
-        round.setCategory(category);
-        match.setCurrentRound(round);
-        boolean matchUpdated = matchService.updateMatch(match);
-        if (round.getCategory() != null && matchUpdated) {
-            return new ResponseEntity<>(round, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Round> startRound(@RequestParam String category_id, String match_id) {
+        try {
+            Match match = matchService.getMatch(Long.parseLong(match_id));
+            Round round = new Round();
+            Category category = vocabularyService.getCategory(Long.parseLong(category_id));
+            round.setCategory(category);
+            match.setCurrentRound(round);
+            boolean matchUpdated = matchService.updateMatch(match);
+            if (round.getCategory() != null && matchUpdated) {
+                return new ResponseEntity<>(round, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception exception) {
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
     }
 

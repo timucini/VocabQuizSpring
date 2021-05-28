@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Round from './Round';
 
 
 function Match(props) {
 
     const [playerNumber, setPlayerNumber] = useState();
     const [matchStarted, setMatchStarted] = useState(false);
-    const [twoPlayersInmatch, setPlayersInMatch] = useState(false);
-
+    const [awaitPlayer, setAwait] = useState(false);
+    const [awaitCategoryPicking, setPicking] = useState(false);
+    const [currentRound, setRound] = useState([]);
 
     const checkPlayerNumber = () => {
         if ( props.user.id == props.match.player1.id) {
             setPlayerNumber(1);
         } else {
             setPlayerNumber(2);
-            setPlayersInMatch(true);
+            setAwait(true);
         }
     }
 
@@ -23,20 +25,21 @@ function Match(props) {
     }, []);
 
 
-    const startRound = () => {
-        axios.post("http://localhost:8080/api/v1/match/startRound").then(res => {
-            console.log(res.data);
-        });
-    };
-
-
     const startMatch = () => {
         setMatchStarted(true);
+        setPicking(true);
     }
 
     const pickCategory = (category_id) => {
         console.log("picked Category with id:" + category_id);
-        console.log("TODO");
+        axios.post("http://localhost:8080/api/v1/match/round", null,
+        { params: { category_id: category_id, match_id: props.match.id }}).then(response => {
+          console.log(response);
+          setRound(response.data);
+          setPicking(false);
+        }, (error) => {
+          console.log(console.log(error));
+        });
     }
 
 
@@ -51,20 +54,20 @@ function Match(props) {
     })
 
     const renderCategoryList = () => {
-        if (playerNumber == 1 && matchStarted) {
+        if (playerNumber == 1 && matchStarted && awaitCategoryPicking) {
             console.log("Need to pick category")
             return categoryList
         }
     }
 
     const renderAwaitPlayer = () => {
-        if (playerNumber == 2) {
+        if (awaitPlayer) {
             return <p>Await other player</p>;
         }
     }
 
     const renderStartButton = () => {
-        if (playerNumber == 1 && !matchStarted) {
+        if (playerNumber == 1 && !matchStarted && !awaitPlayer) {
             return (
                 <button onClick={() => startMatch()}>StartMatch</button>
             );
@@ -72,9 +75,17 @@ function Match(props) {
     }
 
     const renderFinishButton = () => {
-        if (matchStarted) {
+        if (matchStarted && !awaitPlayer) {
             return (
                 <button onClick={() => props.finishMatch()}>Finish Match</button>
+            )
+        }
+    }
+
+    const renderRound = () => {
+        if (matchStarted && !awaitPlayer && !awaitCategoryPicking) {
+            return (
+                <Round round={currentRound}/>
             )
         }
     }
@@ -88,6 +99,7 @@ function Match(props) {
             {renderAwaitPlayer()}
             {renderStartButton()}
             {renderFinishButton()}
+            {renderRound()}
         </div>
     );
 }
