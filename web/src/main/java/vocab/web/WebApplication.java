@@ -1,6 +1,5 @@
 package vocab.web;
 
-import vocab.domain.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,8 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import vocab.domain.*;
-import vocab.services.*;
+import vocab.services.MatchService;
+import vocab.services.UserService;
+import vocab.services.VocabularyService;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
 @EnableJpaRepositories(basePackages = {"vocab"})
 @EntityScan(basePackages = {"vocab"})
 @ComponentScan(basePackages = {"vocab"})
+@Transactional
 public class WebApplication {
 
     public static void main(String[] args) {
@@ -99,8 +102,8 @@ public class WebApplication {
                     "wrong1",
                     "wrong2",
                     "wrong");
-            Answer Answer1 = new Answer("Correct",true,userPlayer1);
-            Answer Answer2 = new Answer("Correct",true,userPlayer2);
+            Answer Answer1 = new Answer("Correct",true,userPlayer1,question);
+            Answer Answer2 = new Answer("Correct",true,userPlayer2,question2);
             List<Answer> answerListList = Arrays.asList(Answer1,Answer2);
             question.setAnswers(answerListList);
             List<Question> questionList = Arrays.asList(question,question2,question3);
@@ -120,10 +123,17 @@ public class WebApplication {
             List<Book> books = VocabularyInputScript.parseFilesToLibrary(resourceDir);
             for (Book book : books) {
                 vocabularyService.addBook(book);
-            }**/
+            }
             for (File file : resourceDir.listFiles()){
                 vocabularyService.addFile(file);
             }
+             **/
+            Match testMatch = matchService.getMatch(22L);
+            User testUser = userService.getUserById(1L);
+            Boolean testbool = matchService.submitAnswer("false",testMatch.getCurrentRound().getQuestions().get(1),testMatch.getId(),testUser);
+            System.out.println(testbool);
+            Match updatedMatch = matchService.getMatch(22L);
+            System.out.println("test:" + updatedMatch.getCurrentRound().getQuestions().get(1).getAnswers().get(1).getCorrect());
         };
     }
 }

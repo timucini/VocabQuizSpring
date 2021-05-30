@@ -1,7 +1,5 @@
 package vocab.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +17,8 @@ public class Question {
     private String WrongAnswer3;
 
     @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "question",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Answer> answers =  new ArrayList<>();
@@ -90,4 +90,5 @@ public class Question {
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
+
 }

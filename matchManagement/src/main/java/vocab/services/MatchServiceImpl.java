@@ -3,18 +3,23 @@ package vocab.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vocab.domain.*;
+import vocab.repositories.AnswerRepository;
 import vocab.repositories.MatchRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class MatchServiceImpl implements MatchService {
     private final MatchRepository matchRepository;
+    private final AnswerRepository answerRepository;
 
     @Autowired
-    public MatchServiceImpl(MatchRepository matchRepository) {
+    public MatchServiceImpl(MatchRepository matchRepository, AnswerRepository answerRepository) {
         this.matchRepository = matchRepository;
+        this.answerRepository = answerRepository;
     }
 
     @Override
@@ -66,15 +71,12 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    @Transactional
     public Boolean submitAnswer(String answer, Question question, Long match_id, User user) {
         Boolean isAnswerCorrect = answer.equals(question.getCorrectAnswer());
-        //fehlt nicht noch die Verbindung zur question?
-        Answer answerObject = new Answer(answer, isAnswerCorrect, user);
-        if (isAnswerCorrect) {
-            return true;
-        } else {
-            return false;
-        }
+        Answer answerObject = new Answer(answer, isAnswerCorrect, user, question);
+        Answer submittedAnswer = answerRepository.save(answerObject);
+        return submittedAnswer.getCorrect();
     }
 
     @Override

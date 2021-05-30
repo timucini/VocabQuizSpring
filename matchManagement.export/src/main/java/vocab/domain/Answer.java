@@ -16,11 +16,15 @@ public class Answer {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
+    private Question question;
 
-    public Answer(String answer, Boolean correct, User user) {
+    public Answer(String answer, Boolean correct, User user, Question question) {
         this.answer = answer;
         this.correct = correct;
         this.user = user;
+        this.question = question;
     }
 
     public Answer() {
@@ -57,6 +61,14 @@ public class Answer {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
 }

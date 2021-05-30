@@ -78,6 +78,10 @@ public class MatchController {
             Match match = matchService.getMatch(Long.parseLong(match_id));
             Round round = new Round();
             Category category = vocabularyService.getCategory(Long.parseLong(category_id));
+            /**
+                TODO: Generate Questions for Category
+                -> pass new Round with generated questions
+             */
             round.setCategory(category);
             match.setCurrentRound(round);
             boolean matchUpdated = matchService.updateMatch(match);
