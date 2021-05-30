@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import vocab.domain.*;
 import vocab.services.MatchService;
 import vocab.services.UserService;
+import vocab.services.VocabularyInputScript;
 import vocab.services.VocabularyService;
 
 import javax.transaction.Transactional;
@@ -119,7 +120,7 @@ public class WebApplication {
             File resourceDir = new File(System.getProperty("user.dir")+resourceString);
 
             // Input Books from Script
-            /**
+
             List<Book> books = VocabularyInputScript.parseFilesToLibrary(resourceDir);
             for (Book book : books) {
                 vocabularyService.addBook(book);
@@ -127,7 +128,7 @@ public class WebApplication {
             for (File file : resourceDir.listFiles()){
                 vocabularyService.addFile(file);
             }
-             **/
+
             Match testMatch = matchService.getMatch(22L);
             User testUser = userService.getUserById(1L);
             Boolean testbool = matchService.submitAnswer("false",testMatch.getCurrentRound().getQuestions().get(1),testMatch.getId(),testUser);
