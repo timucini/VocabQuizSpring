@@ -35,6 +35,7 @@ function Match(props) {
         axios.post("http://localhost:8080/api/v1/match/round", null,
         { params: { category_id: category_id, match_id: props.match.id }}).then(response => {
           console.log(response);
+          // let props = {data: response.data, match: props.match, user: props.user};
           setRound(response.data);
           setPicking(false);
         }, (error) => {
@@ -85,7 +86,7 @@ function Match(props) {
     const renderRound = () => {
         if (matchStarted && !awaitPlayer && !awaitCategoryPicking) {
             return (
-                <Round round={currentRound}/>
+                <Round round={currentRound} match={props.match} user={props.user}/>
             )
         }
     }

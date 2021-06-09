@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import vocab.domain.*;
 import vocab.repositories.AnswerRepository;
 import vocab.repositories.MatchRepository;
+import vocab.repositories.QuestionRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -15,11 +16,13 @@ import java.util.stream.Collectors;
 public class MatchServiceImpl implements MatchService {
     private final MatchRepository matchRepository;
     private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
 
     @Autowired
-    public MatchServiceImpl(MatchRepository matchRepository, AnswerRepository answerRepository) {
+    public MatchServiceImpl(MatchRepository matchRepository, AnswerRepository answerRepository, QuestionRepository questionRepository) {
         this.matchRepository = matchRepository;
         this.answerRepository = answerRepository;
+        this.questionRepository = questionRepository;
     }
 
     @Override
@@ -84,6 +87,11 @@ public class MatchServiceImpl implements MatchService {
         Match match = this.getMatch(match_id);
         match.setFinished(true);
         this.updateMatch(match);
+    }
+
+    @Transactional
+    public Question getQuestion(Long id) {
+        return questionRepository.getQuestionById(id);
     }
 
 
