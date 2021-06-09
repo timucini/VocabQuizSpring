@@ -22,7 +22,7 @@ function Round(props) {
 
     const submitAnswer = (answer, question) => {
         axios.get("http://localhost:8080/api/v1/match/answer",
-            { params: { answer: answer, question_id: question.id, match_id: props.match.id, user: props.user.id }}).then(response => {
+            { params: { answer: answer, question_id: question.id, match_id: props.match.id, user_id: props.user.id }}).then(response => {
             console.log("res", response.data);
             setLastAnswerValidation(response.data);
             // setRound(response.data);

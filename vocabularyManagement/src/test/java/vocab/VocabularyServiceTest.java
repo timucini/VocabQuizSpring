@@ -42,15 +42,6 @@ public class VocabularyServiceTest {
         Mockito.when(vocabularyService.getBooks()).thenReturn(bookList);
     }
 
-    @Test
-    public void testAddBook(){
-        Book book = new Book();
-        book.setName("access 3");
-        //Act
-        Boolean addedBook = vocabularyService.addBook(book);
-        // Assert
-        Assert.assertTrue(addedBook);
-    }
 
     @Test
     public void testGetBooks(){

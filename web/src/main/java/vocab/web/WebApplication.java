@@ -33,6 +33,23 @@ public class WebApplication {
     @Bean
     CommandLineRunner commandLineRunner(UserService userService, VocabularyService vocabularyService, MatchService matchService) {
         return args -> {
+            // Input Script
+
+            String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"vocabulary_input";
+            File resourceDir = new File(System.getProperty("user.dir")+resourceString);
+
+            // Input Books from Script
+
+            List<Book> books = VocabularyInputScript.parseFilesToLibrary(resourceDir);
+            for (File file : resourceDir.listFiles()){
+                try {
+                    vocabularyService.addFile(file);
+                } catch (BadInputFileException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
             // User-Test
             User user1 = new User("User1","password");
             userService.addUser(user1.getUserName(), user1.getPassword());
@@ -117,26 +134,12 @@ public class WebApplication {
             match.setId(12L);
             matchService.updateMatch(match);
 
-            String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"vocabulary_input";
-            File resourceDir = new File(System.getProperty("user.dir")+resourceString);
-
-            // Input Books from Script
-
-            List<Book> books = VocabularyInputScript.parseFilesToLibrary(resourceDir);
-            for (File file : resourceDir.listFiles()){
-                try {
-                    vocabularyService.addFile(file);
-                } catch (BadInputFileException e) {
-                    e.printStackTrace();
-                }
-            }
-
             Match testMatch = matchService.getMatch(22L);
             User testUser = userService.getUserById(1L);
-            Boolean testbool = matchService.submitAnswer("false",testMatch.getCurrentRound().getQuestions().get(1),testMatch.getId(),testUser);
-            System.out.println(testbool);
+            //Boolean testbool = matchService.submitAnswer("false",testMatch.getCurrentRound().getQuestions().get(1),testMatch.getId(),testUser);
+            //System.out.println(testbool);
             Match updatedMatch = matchService.getMatch(22L);
-            System.out.println("test:" + updatedMatch.getCurrentRound().getQuestions().get(1).getAnswers().get(1).getCorrect());
+            //System.out.println("test:" + updatedMatch.getCurrentRound().getQuestions().get(1).getAnswers().get(1).getCorrect());
         };
     }
 }
