@@ -52,4 +52,6 @@ public interface MatchService {
      * @param match_id
      */
     void finishMatch(Long match_id);
+
+    Question getQuestion(Long question_id);
 }
