@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import vocab.domain.Book;
 import vocab.domain.Category;
 import vocab.domain.Translation;
+import vocab.exceptions.BadInputFileException;
 import vocab.repositories.BookRepository;
 import vocab.repositories.CategoryRepository;
 
 import javax.transaction.Transactional;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -29,23 +31,16 @@ public class VocabularyServiceImpl implements VocabularyService {
         return this.bookRepository.findAll();
     }
 
-
     @Transactional
     @Override
-    public Boolean addBook(Book book) {
-        try {
-            this.bookRepository.save(book);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Transactional
-    @Override
-    public Boolean addFile(File file) {
+    public Boolean addFile(File file) throws BadInputFileException {
         List<Book> books = bookRepository.findAll();
-        Book newBook = VocabularyInputScript.parseFileToBook(file);
+        Book newBook = null;
+        try {
+            newBook = VocabularyInputScript.parseFileToBook(file);
+        } catch (IOException e) {
+            throw new BadInputFileException(e.getMessage());
+        }
         int oldBookIndex = books.indexOf(newBook);
         if (oldBookIndex<0){
             this.bookRepository.save(newBook);

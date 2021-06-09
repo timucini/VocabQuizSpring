@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import vocab.domain.*;
+import vocab.exceptions.BadInputFileException;
 import vocab.services.MatchService;
 import vocab.services.UserService;
 import vocab.services.VocabularyInputScript;
@@ -69,8 +70,8 @@ public class WebApplication {
             Category category4 = new Category("category4",translationList4);
             List<Category> categoryList2 = Arrays.asList(category3,category4);
             Book book2 = new Book("book2","Deutsch","English",categoryList2);
-            vocabularyService.addBook(book1);
-            vocabularyService.addBook(book2);
+            //vocabularyService.addBook(book1);
+            //vocabularyService.addBook(book2);
 
             //Match-Test
             // create One-Player Match
@@ -122,11 +123,12 @@ public class WebApplication {
             // Input Books from Script
 
             List<Book> books = VocabularyInputScript.parseFilesToLibrary(resourceDir);
-            for (Book book : books) {
-                vocabularyService.addBook(book);
-            }
             for (File file : resourceDir.listFiles()){
-                vocabularyService.addFile(file);
+                try {
+                    vocabularyService.addFile(file);
+                } catch (BadInputFileException e) {
+                    e.printStackTrace();
+                }
             }
 
             Match testMatch = matchService.getMatch(22L);

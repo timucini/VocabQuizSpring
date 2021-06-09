@@ -1,9 +1,6 @@
 package vocab.services;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.BufferedReader;
+import java.io.*;
 import java.util.*;
 
 import jdk.jfr.Description;
@@ -11,19 +8,15 @@ import vocab.domain.*;
 
 public final class VocabularyInputScript {
 
-    private static List<String> readFile(File file){
+    private static List<String> readFile(File file) throws IOException {
         List<String> input = new ArrayList<String>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String tempString = reader.readLine();
-            while(tempString!=null && !tempString.isEmpty()){
-                input.add(tempString);
-                tempString = reader.readLine();
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String tempString = reader.readLine();
+        while(tempString!=null && !tempString.isEmpty()){
+            input.add(tempString);
+            tempString = reader.readLine();
         }
+        reader.close();
         return input;
     }
 
@@ -49,7 +42,7 @@ public final class VocabularyInputScript {
         return translations;
     }
 
-    public static List<Book> parseFilesToLibrary(File resourceDir){
+    public static List<Book> parseFilesToLibrary(File resourceDir) throws IOException {
         Map<String, Book> books = new HashMap<String, Book>();
         for (File file : resourceDir.listFiles()){
             Book newBook = parseFileToBook(file);
@@ -65,7 +58,7 @@ public final class VocabularyInputScript {
         return new ArrayList<Book>(books.values());
     }
 
-    public static Book parseFileToBook(File file){
+    public static Book parseFileToBook(File file) throws IOException {
         List<String> input = readFile(file);
         String[] description = input.get(0).split("}\\{");
         String bookName = description[3].replaceAll("}", "").replaceAll("\\{", "");
@@ -81,7 +74,12 @@ public final class VocabularyInputScript {
     public static void main(String[] args) {
         String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"vocabulary_input";
         File resourceDir = new File(System.getProperty("user.dir")+resourceString);
-        List<Book> books = parseFilesToLibrary(resourceDir);
+        List<Book> books = null;
+        try {
+            books = parseFilesToLibrary(resourceDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (Book book : books) {
             System.out.println(book);
             System.out.println("");
