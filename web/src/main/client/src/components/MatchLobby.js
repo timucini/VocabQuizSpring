@@ -38,10 +38,12 @@ function MatchLobby(props) {
 
     const onSubmit = (data) => { 
         console.log(data)
-        axios.post("http://localhost:8080/api/v1/vocab/upload", null,
-        { params: { file: data }}).then(response => {
-          console.log(response);
-          console.log("uploaded successfully")
+        const formData = new FormData();
+        formData.append("file", data.file[0]);
+        console.log(formData);
+        axios.post("http://localhost:8080/api/v1/vocab/upload", formData).then(response => {
+            console.log(response);
+            console.log("uploaded successfully")
         }, (error) => {
           console.log(console.log(error));
         });
@@ -67,7 +69,7 @@ function MatchLobby(props) {
             <p>---------------</p>
             <button onClick={() => createMatch()}>Create Match</button>
             <p>--------------</p>
-            <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
+            <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                 <input type="file" name="file" {...register('file', { required: true })} />
                 {errors.file && "file is invalid"}
             <input type="submit" value="uploaden" />

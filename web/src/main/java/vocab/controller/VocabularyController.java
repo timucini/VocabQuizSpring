@@ -2,6 +2,7 @@ package vocab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,10 +40,13 @@ public class VocabularyController {
         }
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<Boolean> uploadFiles(@RequestParam("file") MultipartFile file) {
+    @ResponseBody
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Boolean> uploadFiles(@RequestParam(name = "file") MultipartFile file) {
         try {
-            File convertedFile = new File("C:/work" + file.getOriginalFilename());
+            System.out.println("uploaded");
+            String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"vocabulary_input";
+            File convertedFile = new File(System.getProperty("user.dir")+ resourceString + file.getOriginalFilename());
             convertedFile.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);
             fileOutputStream.write(file.getBytes());
