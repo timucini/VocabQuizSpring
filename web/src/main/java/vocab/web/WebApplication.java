@@ -11,7 +11,6 @@ import vocab.domain.*;
 import vocab.exceptions.BadInputFileException;
 import vocab.services.MatchService;
 import vocab.services.UserService;
-import vocab.services.VocabularyInputScript;
 import vocab.services.VocabularyService;
 
 import javax.transaction.Transactional;
@@ -40,7 +39,6 @@ public class WebApplication {
 
             // Input Books from Script
 
-            List<Book> books = VocabularyInputScript.parseFilesToLibrary(resourceDir);
             for (File file : resourceDir.listFiles()){
                 try {
                     vocabularyService.addFile(file);
@@ -58,37 +56,6 @@ public class WebApplication {
 
             User usertest =  userService.getUser(user1.getUserName(),user1.getPassword());
             System.out.println(usertest.toString());
-            List<String> to1 = Arrays.asList("to1");
-            List<String> to2 = Arrays.asList("to2");
-            List<String> to3 = Arrays.asList("to3");
-            List<String> to4 = Arrays.asList("to4");
-            List<String> to5 = Arrays.asList("to5");
-            List<String> to6 = Arrays.asList("to6");
-            List<String> to7 = Arrays.asList("to7");
-            List<String> to8 = Arrays.asList("to8");
-
-            Translation translation1 = new Translation(to8,to1);
-            Translation translation2 = new Translation(to7,to2);
-            List<Translation> translationList1 = Arrays.asList(translation1,translation2);
-            Category category1 = new Category("category1",translationList1);
-            Translation translation3 = new Translation(to6,to3);
-            Translation translation4 = new Translation(to5,to4);
-            List<Translation> translationList2 = Arrays.asList(translation3,translation4);
-            Category category2 = new Category("category1",translationList2);
-            List<Category> categoryList = Arrays.asList(category1,category2);
-            Book book1 = new Book("book1","Deutsch","English",categoryList);
-            Translation translation5 = new Translation(to4,to5);
-            Translation translation6 = new Translation(to3,to6);
-            List<Translation> translationList3 = Arrays.asList(translation5,translation6);
-            Category category3 = new Category("category3",translationList3);
-            Translation translation7 = new Translation(to2,to7);
-            Translation translation8 = new Translation(to1,to8);
-            List<Translation> translationList4 = Arrays.asList(translation7,translation8);
-            Category category4 = new Category("category4",translationList4);
-            List<Category> categoryList2 = Arrays.asList(category3,category4);
-            Book book2 = new Book("book2","Deutsch","English",categoryList2);
-            //vocabularyService.addBook(book1);
-            //vocabularyService.addBook(book2);
 
             //Match-Test
             // create One-Player Match
@@ -102,25 +69,28 @@ public class WebApplication {
             Match match = matchService.getAvailableMatches(userPlayer1).get(0);
             User userPlayer2 = userService.getUser("User2","password");
             match.setPlayer2(userPlayer2);
+            Translation translationRight = vocabularyService.getBooks().get(0).getCategories().get(0).getTranslations().get(0);
+            Translation translationWrong = vocabularyService.getBooks().get(0).getCategories().get(0).getTranslations().get(1);
+
 
             Question question = new Question(
                     "Question",
-                    "Correct",
-                    "wrong1",
-                    "wrong2",
-                    "wrong");
+                    translationRight,
+                    translationWrong,
+                    translationWrong,
+                    translationWrong);
             Question question2 = new Question(
                     "Question",
-                    "Correct",
-                    "wrong1",
-                    "wrong2",
-                    "wrong");
+                    translationRight,
+                    translationWrong,
+                    translationWrong,
+                    translationWrong);
             Question question3 = new Question(
                     "Question",
-                    "Correct",
-                    "wrong1",
-                    "wrong2",
-                    "wrong");
+                    translationRight,
+                    translationWrong,
+                    translationWrong,
+                    translationWrong);
             Answer Answer1 = new Answer("Correct",true,userPlayer1,question);
             Answer Answer2 = new Answer("Correct",true,userPlayer2,question2);
             List<Answer> answerListList = Arrays.asList(Answer1,Answer2);
@@ -134,12 +104,7 @@ public class WebApplication {
             match.setId(12L);
             matchService.updateMatch(match);
 
-            Match testMatch = matchService.getMatch(22L);
-            User testUser = userService.getUserById(1L);
-            //Boolean testbool = matchService.submitAnswer("false",testMatch.getCurrentRound().getQuestions().get(1),testMatch.getId(),testUser);
-            //System.out.println(testbool);
-            Match updatedMatch = matchService.getMatch(22L);
-            //System.out.println("test:" + updatedMatch.getCurrentRound().getQuestions().get(1).getAnswers().get(1).getCorrect());
+
         };
     }
 }

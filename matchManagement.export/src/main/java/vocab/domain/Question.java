@@ -11,10 +11,19 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String questionString;
-    private String CorrectAnswer;
-    private String WrongAnswer1;
-    private String WrongAnswer2;
-    private String WrongAnswer3;
+
+    @OneToOne
+    @JoinColumn(name = "correctAnswer_id", referencedColumnName = "id")
+    private Translation CorrectAnswer;
+    @OneToOne
+    @JoinColumn(name = "wrongAnswer1_id", referencedColumnName = "id")
+    private Translation WrongAnswer1;
+    @OneToOne
+    @JoinColumn(name = "wrongAnswer2_id", referencedColumnName = "id")
+    private Translation WrongAnswer2;
+    @OneToOne
+    @JoinColumn(name = "wrongAnswer3_id", referencedColumnName = "id")
+    private Translation WrongAnswer3;
 
     @OneToMany(
             fetch = FetchType.EAGER,
@@ -23,7 +32,7 @@ public class Question {
             orphanRemoval = true)
     private List<Answer> answers =  new ArrayList<>();
 
-    public Question(String questionString, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3) {
+    public Question(String questionString, Translation correctAnswer, Translation wrongAnswer1, Translation wrongAnswer2, Translation wrongAnswer3) {
         this.questionString = questionString;
         CorrectAnswer = correctAnswer;
         WrongAnswer1 = wrongAnswer1;
@@ -51,35 +60,35 @@ public class Question {
         this.questionString = questionString;
     }
 
-    public String getCorrectAnswer() {
+    public Translation getCorrectAnswer() {
         return CorrectAnswer;
     }
 
-    public void setCorrectAnswer(String correctAnswer) {
+    public void setCorrectAnswer(Translation correctAnswer) {
         CorrectAnswer = correctAnswer;
     }
 
-    public String getWrongAnswer1() {
+    public Translation getWrongAnswer1() {
         return WrongAnswer1;
     }
 
-    public void setWrongAnswer1(String wrongAnswer1) {
+    public void setWrongAnswer1(Translation wrongAnswer1) {
         WrongAnswer1 = wrongAnswer1;
     }
 
-    public String getWrongAnswer2() {
+    public Translation getWrongAnswer2() {
         return WrongAnswer2;
     }
 
-    public void setWrongAnswer2(String wrongAnswer2) {
+    public void setWrongAnswer2(Translation wrongAnswer2) {
         WrongAnswer2 = wrongAnswer2;
     }
 
-    public String getWrongAnswer3() {
+    public Translation getWrongAnswer3() {
         return WrongAnswer3;
     }
 
-    public void setWrongAnswer3(String wrongAnswer3) {
+    public void setWrongAnswer3(Translation wrongAnswer3) {
         WrongAnswer3 = wrongAnswer3;
     }
 

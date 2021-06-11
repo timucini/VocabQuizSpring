@@ -8,7 +8,6 @@ import vocab.domain.*;
 import vocab.services.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -89,10 +88,10 @@ public class MatchController {
 
                 Question question = new Question(
                         translation.getStringFrom().get(0),
-                        translation.getStringTo().get(0),
-                        translations.get(0).getStringFrom().get(0),
-                        translations.get(0).getStringFrom().get(0),
-                        translations.get(0).getStringTo().get(0));
+                        translation,
+                        translations.get(0),
+                        translations.get(0),
+                        translations.get(0));
                 questionList.add(question);
             }
             Round round = new Round(questionList,category);

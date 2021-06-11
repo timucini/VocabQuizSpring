@@ -76,7 +76,8 @@ public class MatchServiceImpl implements MatchService {
     @Override
     @Transactional
     public Boolean submitAnswer(String answer, Question question, Long match_id, User user) {
-        Boolean isAnswerCorrect = answer.equals(question.getCorrectAnswer());
+        List<String> possibleAnswers = question.getCorrectAnswer().getStringTo();
+        Boolean isAnswerCorrect = possibleAnswers.contains(answer);
         Answer answerObject = new Answer(answer, isAnswerCorrect, user, question);
         Answer submittedAnswer = answerRepository.save(answerObject);
         return submittedAnswer.getCorrect();

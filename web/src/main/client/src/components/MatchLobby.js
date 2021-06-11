@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useForm } from 'react-hook-form';
 import axios from "axios";
 
 function MatchLobby(props) {
@@ -32,6 +33,20 @@ function MatchLobby(props) {
         });
     };
 
+    const { register, formState: { errors }, handleSubmit } = useForm();
+
+
+    const onSubmit = (data) => { 
+        console.log(data)
+        axios.post("http://localhost:8080/api/v1/vocab/upload", null,
+        { params: { file: data }}).then(response => {
+          console.log(response);
+          console.log("uploaded successfully")
+        }, (error) => {
+          console.log(console.log(error));
+        });
+    }
+
     
     const matchList = matches.map((match,index) => {
         return(
@@ -51,6 +66,12 @@ function MatchLobby(props) {
             <button onClick={() => props.logOut()}>Ausloggen</button>
             <p>---------------</p>
             <button onClick={() => createMatch()}>Create Match</button>
+            <p>--------------</p>
+            <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
+                <input type="file" name="file" {...register('file', { required: true })} />
+                {errors.file && "file is invalid"}
+            <input type="submit" value="uploaden" />
+        </form>
         </div>
     )
 }
