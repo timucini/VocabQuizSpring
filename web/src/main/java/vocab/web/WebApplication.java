@@ -103,8 +103,6 @@ public class WebApplication {
             match.setFinished(true);
             match.setId(12L);
             matchService.updateMatch(match);
-
-
         };
     }
 }

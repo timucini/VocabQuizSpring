@@ -10,6 +10,7 @@ function Round(props) {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [currentQuestion, setQuestion] = useState([]);
     const [lastAnswerValidation, setLastAnswerValidation] = useState(true);
+    const [roundFinished, setRoundFinished] = useState(false);
     // let state;
     // state = { testVarible: "this is a test" };
 
@@ -33,12 +34,6 @@ function Round(props) {
         console.log("x");
     }
 
-    const nextQuestion = () => {
-        // console.log(this.questionNumber);
-        // this.setState( this.questionNumber = this.questionNumber+1);
-        // console.log(this.questionNumber);
-    }
-
 
     const correctList = props.round.questions[questionNumber].correctAnswer.stringTo;
     const correct = correctList[Math.floor(Math.random()*correctList.length)];
@@ -52,6 +47,15 @@ function Round(props) {
     const answer3List = props.round.questions[questionNumber].wrongAnswer3.stringTo;
     const answer3 =  answer3List[Math.floor(Math.random()* answer3List.length)];
 
+    const nextQuestion = (questionNumber) => {
+        if (questionNumber < 1) {
+            setQuestionNumber(questionNumber + 1)
+        } else {
+            setQuestionNumber(questionNumber + 1)
+            setRoundFinished(true);
+        }
+    }
+
     return(
         <div>
            <p>IN Round</p>
@@ -63,7 +67,9 @@ function Round(props) {
             {<button onClick={() => submitAnswer(answer2, props.round.questions[questionNumber])}> {answer2} </button>}
             {<button onClick={() => submitAnswer(answer3, props.round.questions[questionNumber])}> {answer3} </button>}
             <p>Your answer was {lastAnswerValidation.toString()} </p>
-            <p>{<button onClick={() => setQuestionNumber(questionNumber+1)}> next Question </button>}</p>
+            {!roundFinished &&
+                <p>{<button onClick={() => nextQuestion(questionNumber)}> next Question </button>}</p>
+            }
         </div>
     );
 }

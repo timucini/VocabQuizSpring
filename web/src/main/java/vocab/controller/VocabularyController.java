@@ -10,8 +10,6 @@ import vocab.domain.Book;
 import vocab.services.VocabularyService;
 import vocab.services.VocabularyServiceImpl;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.List;
 
 @RestController
@@ -45,13 +43,12 @@ public class VocabularyController {
     public ResponseEntity<Boolean> uploadFiles(@RequestParam(name = "file") MultipartFile file) {
         try {
             System.out.println("uploaded");
-            String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"vocabulary_input";
-            File convertedFile = new File(System.getProperty("user.dir")+ resourceString + file.getOriginalFilename());
-            convertedFile.createNewFile();
-            FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);
-            fileOutputStream.write(file.getBytes());
-            vocabularyService.addFile(convertedFile);
-            return new ResponseEntity<>(true, HttpStatus.OK);
+            Boolean succeeded = vocabularyService.addMultipartFileHelper(file);
+            if (succeeded)  {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else  {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
         } catch (Exception exception) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }

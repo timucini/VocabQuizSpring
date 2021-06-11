@@ -1,5 +1,6 @@
 package vocab.services;
 
+import org.springframework.web.multipart.MultipartFile;
 import vocab.domain.Book;
 import vocab.domain.Category;
 import vocab.exceptions.BadInputFileException;
@@ -31,4 +32,6 @@ public interface VocabularyService {
 
 
     Book getBook(Long id);
+
+    Boolean addMultipartFileHelper(MultipartFile file) throws  BadInputFileException;
 }

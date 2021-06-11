@@ -24,9 +24,8 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody User user ) {
-        User addedUser = null;
         try {
-            addedUser = userService.addUser(user.getUserName(), user.getPassword());
+            User addedUser = userService.addUser(user.getUserName(), user.getPassword());
             return new ResponseEntity<>(addedUser, HttpStatus.OK);
         } catch (SQLException throwables) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

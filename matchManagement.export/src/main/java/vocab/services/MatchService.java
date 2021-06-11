@@ -54,4 +54,6 @@ public interface MatchService {
     void finishMatch(Long match_id);
 
     Question getQuestion(Long question_id);
+
+    Round startRound(Category category, Match match);
 }

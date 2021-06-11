@@ -8,6 +8,7 @@ import vocab.repositories.MatchRepository;
 import vocab.repositories.QuestionRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,6 +94,34 @@ public class MatchServiceImpl implements MatchService {
     @Transactional
     public Question getQuestion(Long id) {
         return questionRepository.getQuestionById(id);
+    }
+
+    @Override
+    public Round startRound(Category category, Match match) {
+        //
+        List<Translation> translations = category.getTranslations();
+        List<Question> questionList = new ArrayList<>();
+        int questionNumber = translations.size() > 3 ? 3 : translations.size();
+        for (int i = 0; i < questionNumber; i++) {
+            int otherTranslationIndex = i > translations.size() ? i-1 : i+1;
+            Translation translation = translations.get(i);
+
+            Question question = new Question(
+                    translation.getStringFrom().get(0),
+                    translation,
+                    translations.get(0),
+                    translations.get(0),
+                    translations.get(0));
+            questionList.add(question);
+        }
+        Round round = new Round(questionList,category);
+        match.setCurrentRound(round);
+        boolean matchUpdated = updateMatch(match);
+        if (matchUpdated) {
+            return getMatch(match.getId()).getCurrentRound();
+        } else {
+            return null;
+        }
     }
 
 

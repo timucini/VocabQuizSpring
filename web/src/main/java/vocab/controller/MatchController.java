@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import vocab.domain.*;
 import vocab.services.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -78,34 +77,8 @@ public class MatchController {
         try {
             Match match = matchService.getMatch(Long.parseLong(match_id));
             Category category = vocabularyService.getCategory(Long.parseLong(category_id));
-            //
-            List<Translation> translations = category.getTranslations();
-            List<Question> questionList = new ArrayList<>();
-            int questionNumber = translations.size() > 3 ? 3 : translations.size();
-            for (int i = 0; i < questionNumber; i++) {
-                int otherTranslationIndex = i > translations.size() ? i-1 : i+1;
-                Translation translation = translations.get(i);
-
-                Question question = new Question(
-                        translation.getStringFrom().get(0),
-                        translation,
-                        translations.get(0),
-                        translations.get(0),
-                        translations.get(0));
-                questionList.add(question);
-            }
-            Round round = new Round(questionList,category);
-            match.setCurrentRound(round);
-            /**
-                TODO: Generate Questions for Category
-                -> pass new Round with generated questions
-             */
-//            vocabularyService.getQuestions(category_id);
-//            round.setCategory(category);
-//            match.setCurrentRound(round);
-            boolean matchUpdated = matchService.updateMatch(match);
-            Round returnRound = matchService.getMatch(Long.parseLong(match_id)).getCurrentRound();
-            if (round.getCategory() != null && matchUpdated) {
+            Round returnRound = matchService.startRound(category,match);
+            if (returnRound != null) {
                 return new ResponseEntity<>(returnRound, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

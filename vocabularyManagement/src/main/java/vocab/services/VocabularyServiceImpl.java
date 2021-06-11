@@ -2,6 +2,7 @@ package vocab.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import vocab.domain.Book;
 import vocab.domain.Category;
 import vocab.domain.Translation;
@@ -11,6 +12,7 @@ import vocab.repositories.CategoryRepository;
 
 import javax.transaction.Transactional;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -78,4 +80,22 @@ public class VocabularyServiceImpl implements VocabularyService {
     public Book getBook(Long id) {
         return bookRepository.getBookById(id);
     }
+
+    @Transactional
+    @Override
+    public Boolean addMultipartFileHelper(MultipartFile file) throws BadInputFileException {
+        String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"vocabulary_input";
+        File convertedFile = new File(System.getProperty("user.dir")+ resourceString + file.getOriginalFilename());
+        try {
+            convertedFile.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);
+            fileOutputStream.write(file.getBytes());
+            return addFile(convertedFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
