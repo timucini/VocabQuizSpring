@@ -33,6 +33,7 @@ public class Match {
     public Match(User player1, Book book) {
         this.player1 = player1;
         this.book = book;
+        finished = false;
     }
 
     public Match() {

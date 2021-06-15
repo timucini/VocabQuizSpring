@@ -40,7 +40,7 @@ public class VocabularyServiceImpl implements VocabularyService {
         Book newBook = null;
         try {
             newBook = VocabularyInputScript.parseFileToBook(file);
-        } catch (IOException e) {
+        } catch (RuntimeException | IOException e) {
             throw new BadInputFileException(e.getMessage());
         }
         int oldBookIndex = books.indexOf(newBook);
@@ -84,18 +84,17 @@ public class VocabularyServiceImpl implements VocabularyService {
     @Transactional
     @Override
     public Boolean addMultipartFileHelper(MultipartFile file) throws BadInputFileException {
-        String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"vocabulary_input";
+        String resourceString = File.separator+"resources"+File.separator;
         File convertedFile = new File(System.getProperty("user.dir")+ resourceString + file.getOriginalFilename());
+        System.out.println(convertedFile.getAbsolutePath());
         try {
             convertedFile.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);
             fileOutputStream.write(file.getBytes());
             return addFile(convertedFile);
-        } catch (IOException e) {
+        } catch (RuntimeException | IOException e) {
             e.printStackTrace();
             return false;
         }
     }
-
-
 }

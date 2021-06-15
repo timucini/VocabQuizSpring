@@ -32,8 +32,7 @@ public class MatchServiceImpl implements MatchService {
         match.setFinished(false);
         match.setScorePlayer1(0);
         match.setScorePlayer2(2);
-        matchRepository.save(match);
-        return match;
+        return matchRepository.save(match);
     }
 
     @Override

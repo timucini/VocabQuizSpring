@@ -1,0 +1,2 @@
+{{{category1}}}{{{language1}}}{{{language2}}}{{{book1}}}
+{language1word1} : {language2word1}
