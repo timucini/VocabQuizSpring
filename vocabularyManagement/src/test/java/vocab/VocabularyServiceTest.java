@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
+
 @RunWith(MockitoJUnitRunner.class)
 public class VocabularyServiceTest {
 
@@ -47,8 +49,8 @@ public class VocabularyServiceTest {
         //Act
         List<Book> bookList = vocabularyService.getBooks();
         // Assert
-        Assert.assertNotNull(bookList);
         Mockito.verify(mockedBookRepository, Mockito.times(1)).findAll();
+        Assert.assertNotNull(bookList);
     }
 
     @Test
@@ -56,7 +58,7 @@ public class VocabularyServiceTest {
         //Arrange
         File testFile = new File(System.getProperty("user.dir")+File.separator+"resources"+File.separator+"test.txt");
         Mockito.when(mockedBookRepository.findAll()).thenReturn(new ArrayList<>());
-        Mockito.when(mockedBookRepository.save(Mockito.any(Book.class))).thenReturn(null);
+        Mockito.when(mockedBookRepository.save(Mockito.any(Book.class))).then(returnsFirstArg());
         Boolean isChanged = null;
         //Act
         try {
@@ -65,9 +67,9 @@ public class VocabularyServiceTest {
             e.printStackTrace();
         }
         // Assert
-        Assert.assertTrue(isChanged);
         Mockito.verify(mockedBookRepository, Mockito.times(1)).save(Mockito.any(Book.class));
         Mockito.verify(mockedBookRepository, Mockito.times(1)).findAll();
+        Assert.assertTrue(isChanged);
     }
 
     @Test
@@ -85,8 +87,8 @@ public class VocabularyServiceTest {
             e.printStackTrace();
         }
         // Assert
-        Assert.assertFalse(isChanged);
         Mockito.verify(mockedBookRepository, Mockito.times(1)).findAll();
+        Assert.assertFalse(isChanged);
     }
 
     @Test
@@ -119,9 +121,9 @@ public class VocabularyServiceTest {
             e.printStackTrace();
         }
         // Assert
-        Assert.assertTrue(isChanged);
         Mockito.verify(mockedBookRepository, Mockito.times(1)).save(Mockito.any(Book.class));
         Mockito.verify(mockedBookRepository, Mockito.times(1)).findAll();
+        Assert.assertTrue(isChanged);
     }
 
     @Test
@@ -147,8 +149,8 @@ public class VocabularyServiceTest {
             e.printStackTrace();
         }
         // Assert
-        Assert.assertFalse(isChanged);
         Mockito.verify(mockedBookRepository, Mockito.times(1)).findAll();
+        Assert.assertFalse(isChanged);
     }
 
     @Test

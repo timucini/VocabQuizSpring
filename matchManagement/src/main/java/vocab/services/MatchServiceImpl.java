@@ -90,6 +90,7 @@ public class MatchServiceImpl implements MatchService {
         this.updateMatch(match);
     }
 
+    @Override
     @Transactional
     public Question getQuestion(Long id) {
         return questionRepository.getQuestionById(id);

@@ -38,8 +38,8 @@ public class UserServiceTest {
         //Act
         User requestedUser = userService.getUser(userName, password);
         //Assert
-        Assert.assertEquals(testUser, requestedUser);
         Mockito.verify(mockedUserRepository, Mockito.times(1)).getUserByUserNameAndPassword(userName, password);
+        Assert.assertEquals(testUser, requestedUser);
     }
 
     @Test
@@ -49,8 +49,8 @@ public class UserServiceTest {
         String password = "password";
         Mockito.when(mockedUserRepository.getUserByUserNameAndPassword(userName, password)).thenThrow(new RuntimeException());
         //Assert
-        Assert.assertThrows(ResourceNotFoundException.class, () -> userService.getUser(userName, password));
         Mockito.verify(mockedUserRepository, Mockito.times(1)).getUserByUserNameAndPassword(userName, password);
+        Assert.assertThrows(ResourceNotFoundException.class, () -> userService.getUser(userName, password));
     }
 
     @Test
@@ -65,8 +65,8 @@ public class UserServiceTest {
         //Act
         User requestedUser = userService.getUserById(id);
         //Assert
-        Assert.assertEquals(id, requestedUser.getId().longValue());
         Mockito.verify(mockedUserRepository, Mockito.times(1)).getUserById(id);
+        Assert.assertEquals(id, requestedUser.getId().longValue());
     }
 
     @Test
@@ -75,8 +75,8 @@ public class UserServiceTest {
         long id = 123L;
         Mockito.when(mockedUserRepository.getUserById(id)).thenThrow(new RuntimeException());
         //Assert
-        Assert.assertThrows(ResourceNotFoundException.class, () -> userService.getUserById(id));
         Mockito.verify(mockedUserRepository, Mockito.times(1)).getUserById(id);
+        Assert.assertThrows(ResourceNotFoundException.class, () -> userService.getUserById(id));
     }
 
     @Test
@@ -94,8 +94,8 @@ public class UserServiceTest {
             e.printStackTrace();
         }
         //Assert
-        Assert.assertNotNull(addedUser);
         Mockito.verify(mockedUserRepository, Mockito.times(1)).save(testUser);
+        Assert.assertNotNull(addedUser);
     }
 
     @Test
@@ -106,7 +106,7 @@ public class UserServiceTest {
         User testUser = new User(userName, password);
         Mockito.when(mockedUserRepository.save(testUser)).thenThrow(new RuntimeException());
         //Assert
-        Assert.assertThrows(SQLException.class, () -> userService.addUser(userName, password));
         Mockito.verify(mockedUserRepository, Mockito.times(1)).save(testUser);
+        Assert.assertThrows(SQLException.class, () -> userService.addUser(userName, password));
     }
 }
