@@ -95,8 +95,7 @@ public class VocabularyServiceImpl implements VocabularyService {
             fileOutputStream.write(file.getBytes());
             return addFile(convertedFile);
         } catch (RuntimeException | IOException e) {
-            e.printStackTrace();
-            return false;
+            throw new BadInputFileException(e.getMessage());
         }
     }
 }

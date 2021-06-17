@@ -34,7 +34,7 @@ public class WebApplication {
         return args -> {
             // Input Script
 
-            String resourceString = File.separator+"web"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+ "resources/vocabulary_input";
+            String resourceString = File.separator+"resources";
             File resourceDir = new File(System.getProperty("user.dir")+resourceString);
 
             // Input Books from Script
