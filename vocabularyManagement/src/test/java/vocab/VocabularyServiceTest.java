@@ -100,6 +100,44 @@ public class VocabularyServiceTest {
     }
 
     @Test
+    public void testGetCategory(){
+        //Arrange
+        long id = 123L;
+        long wrong_id = 0L;
+        Category testCategory = new Category();
+        testCategory.setId(id);
+        Mockito.when(mockedCategoryRepository.getCategoryById(id)).thenReturn(testCategory);
+        Mockito.when(mockedCategoryRepository.getCategoryById(wrong_id)).thenReturn(null);
+        //Act
+        Category requestedCategory = vocabularyService.getCategory(id);
+        Category nullCategory = vocabularyService.getCategory(wrong_id);
+        // Assert
+        Mockito.verify(mockedCategoryRepository, Mockito.times(1)).getCategoryById(id);
+        Mockito.verify(mockedCategoryRepository, Mockito.times(1)).getCategoryById(wrong_id);
+        Assert.assertEquals(id, requestedCategory.getId().longValue());
+        Assert.assertNull(nullCategory);
+    }
+
+    @Test
+    public void testGetBook(){
+        //Arrange
+        long id = 123L;
+        long wrong_id = 0L;
+        Book testBook = new Book();
+        testBook.setId(id);
+        Mockito.when(mockedBookRepository.getBookById(id)).thenReturn(testBook);
+        Mockito.when(mockedBookRepository.getBookById(wrong_id)).thenReturn(null);
+        //Act
+        Book requestedBook = vocabularyService.getBook(id);
+        Book nullBook = vocabularyService.getBook(wrong_id);
+        // Assert
+        Mockito.verify(mockedBookRepository, Mockito.times(1)).getBookById(id);
+        Mockito.verify(mockedBookRepository, Mockito.times(1)).getBookById(wrong_id);
+        Assert.assertEquals(id, requestedBook.getId().longValue());
+        Assert.assertNull(nullBook);
+    }
+
+    @Test
     public void testAddMultipartFile(){
         //Arrange
         String fileName = "test.txt";

@@ -71,11 +71,13 @@ public class VocabularyServiceImpl implements VocabularyService {
         }
     }
 
+    @Override
     @Transactional
     public Category getCategory(Long id) {
         return categoryRepository.getCategoryById(id);
     }
 
+    @Override
     @Transactional
     public Book getBook(Long id) {
         return bookRepository.getBookById(id);

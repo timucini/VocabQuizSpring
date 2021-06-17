@@ -49,8 +49,8 @@ public class UserServiceTest {
         String password = "password";
         Mockito.when(mockedUserRepository.getUserByUserNameAndPassword(userName, password)).thenThrow(new RuntimeException());
         //Assert
-        Mockito.verify(mockedUserRepository, Mockito.times(1)).getUserByUserNameAndPassword(userName, password);
         Assert.assertThrows(ResourceNotFoundException.class, () -> userService.getUser(userName, password));
+        Mockito.verify(mockedUserRepository, Mockito.times(1)).getUserByUserNameAndPassword(userName, password);
     }
 
     @Test
@@ -75,8 +75,8 @@ public class UserServiceTest {
         long id = 123L;
         Mockito.when(mockedUserRepository.getUserById(id)).thenThrow(new RuntimeException());
         //Assert
-        Mockito.verify(mockedUserRepository, Mockito.times(1)).getUserById(id);
         Assert.assertThrows(ResourceNotFoundException.class, () -> userService.getUserById(id));
+        Mockito.verify(mockedUserRepository, Mockito.times(1)).getUserById(id);
     }
 
     @Test
@@ -106,7 +106,7 @@ public class UserServiceTest {
         User testUser = new User(userName, password);
         Mockito.when(mockedUserRepository.save(testUser)).thenThrow(new RuntimeException());
         //Assert
-        Mockito.verify(mockedUserRepository, Mockito.times(1)).save(testUser);
         Assert.assertThrows(SQLException.class, () -> userService.addUser(userName, password));
+        Mockito.verify(mockedUserRepository, Mockito.times(1)).save(testUser);
     }
 }
