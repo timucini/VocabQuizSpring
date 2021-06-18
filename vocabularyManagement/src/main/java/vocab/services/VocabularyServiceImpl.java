@@ -37,7 +37,7 @@ public class VocabularyServiceImpl implements VocabularyService {
     @Override
     public Boolean addFile(File file) throws BadInputFileException {
         List<Book> books = bookRepository.findAll();
-        Book newBook = null;
+        Book newBook;
         try {
             newBook = VocabularyInputScript.parseFileToBook(file);
         } catch (RuntimeException | IOException e) {
@@ -87,8 +87,7 @@ public class VocabularyServiceImpl implements VocabularyService {
     @Override
     public Boolean addMultipartFileHelper(MultipartFile file) throws BadInputFileException {
         String resourceString = File.separator+"resources"+File.separator;
-        File convertedFile = new File(System.getProperty("user.dir")+ resourceString + file.getOriginalFilename());
-        System.out.println(convertedFile.getAbsolutePath());
+        File convertedFile = new File(System.getProperty("user.dir")+ resourceString + "temp" + file.getOriginalFilename());
         try {
             convertedFile.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);

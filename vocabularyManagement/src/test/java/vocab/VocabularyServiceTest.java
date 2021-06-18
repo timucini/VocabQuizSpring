@@ -1,5 +1,4 @@
 package vocab;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -148,7 +147,7 @@ public class VocabularyServiceTest {
         }catch (IOException e) {
             e.printStackTrace();
         }
-        MultipartFile testMultipartFile = new MockMultipartFile(fileName, content);
+        MultipartFile testMultipartFile = new MockMultipartFile(fileName, fileName, null, content);
         Mockito.when(mockedBookRepository.save(Mockito.any(Book.class))).thenReturn(null);
         Mockito.when(mockedBookRepository.findAll()).thenReturn(new ArrayList<>());
         Boolean isChanged = null;
@@ -175,7 +174,7 @@ public class VocabularyServiceTest {
         }catch (IOException e) {
             e.printStackTrace();
         }
-        MultipartFile testMultipartFile = new MockMultipartFile(fileName, content);
+        MultipartFile testMultipartFile = new MockMultipartFile(fileName, fileName, null, content);
         Boolean isChanged = null;
         Category testCategory = new Category("category1",Arrays.asList(new Translation(Arrays.asList("language1word1"), Arrays.asList("language2word1"))));
         Book testBook = new Book("book1", "language1", "language2", Arrays.asList(testCategory));
