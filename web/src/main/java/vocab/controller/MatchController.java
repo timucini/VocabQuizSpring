@@ -40,6 +40,16 @@ public class MatchController {
         }
     }
 
+    @GetMapping("/match")
+    public ResponseEntity<Match> getMatch(@RequestParam String match_id) {
+        Match match = matchService.getMatch(Long.parseLong(match_id));
+        if (match != null) {
+            return new ResponseEntity<>(match, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @PostMapping("/create")
     public ResponseEntity<Match> createMatch(@RequestParam String user_id, String book_id){

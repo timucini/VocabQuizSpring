@@ -1,33 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {render} from "@testing-library/react";
 
 
 function Round(props) {
 
 
-    // this.state = {questionNumber: 0};
 
     const [questionNumber, setQuestionNumber] = useState(0);
     const [currentQuestion, setQuestion] = useState([]);
     const [lastAnswerValidation, setLastAnswerValidation] = useState(true);
     const [roundFinished, setRoundFinished] = useState(false);
-    // let state;
-    // state = { testVarible: "this is a test" };
-
-
-    // onMove = () => {
-    //     console.log(this.state.testVarible);
-    //     this.setState({ testVarible: "new value" });
-    // }
-
 
     const submitAnswer = (answer, question) => {
         axios.get("http://localhost:8080/api/v1/match/answer",
             { params: { answer: answer, question_id: question.id, match_id: props.match.id, user_id: props.user.id }}).then(response => {
             console.log("res", response.data);
             setLastAnswerValidation(response.data);
-            // setRound(response.data);
-            // setPicking(false);
         }, (error) => {
             console.log(console.log(error));
         });
@@ -55,6 +44,13 @@ function Round(props) {
             setRoundFinished(true);
         }
     }
+    const renderFinishButton = () => {
+        if (roundFinished) {
+            return (
+                <button onClick={() => props.finishRound()}>Finish Round</button>
+            )
+        }
+    }
 
     return(
         <div>
@@ -70,6 +66,7 @@ function Round(props) {
             {!roundFinished &&
                 <p>{<button onClick={() => nextQuestion(questionNumber)}> next Question </button>}</p>
             }
+            {renderFinishButton()}
         </div>
     );
 }
