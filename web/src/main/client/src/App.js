@@ -6,6 +6,7 @@ import MatchLobby from './components/MatchLobby';
 import Match from './components/Match';
 import Result from './components/Result';
 import CreateMatch from './components/CreateMatch';
+import axios from "axios";
 
 export default function App() {
 
