@@ -59,12 +59,13 @@ function MatchLobby(props) {
                 <button onClick={() => joinMatch(match.id)}>Joinen</button>
             </div>
         )
-    })
+    });
 
     return(
         <div className = "MatchLobby">
             <div>Hello {props.user.userName}</div>
             {matchList}
+            {/*<button onClick={() => ()}>Refresh Matches</button>*/}
             <button onClick={() => props.logOut()}>Ausloggen</button>
             <p>---------------</p>
             <button onClick={() => createMatch()}>Create Match</button>
