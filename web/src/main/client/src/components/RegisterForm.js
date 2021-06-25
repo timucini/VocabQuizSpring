@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import axios from "axios";
+import '../styling/Forms.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function RegisterForm(props) {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -13,7 +16,7 @@ function RegisterForm(props) {
           props.setUserState(response.data);
           props.setLoginState(true);
         }, (error) => {
-          console.log(console.log(error));
+          toast.warn('Cannot register user, use different username or login', { position: toast.POSITION.TOP_CENTER})
         });
     };
     
@@ -26,6 +29,10 @@ function RegisterForm(props) {
           {errors.password && "Password is invalid"}
           <input type="submit" value="Profil erstellen" />
         </form>
+        <div>
+          <p>Bereits registriert?   <button onClick={() => props.setLoginForm()}>Einloggen</button></p>
+        </div>
+        <ToastContainer />
       </div>
     )
 }

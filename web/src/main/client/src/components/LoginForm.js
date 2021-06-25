@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import axios from "axios";
+import '../styling/Forms.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function LoginForm(props) {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -13,10 +17,10 @@ function LoginForm(props) {
           props.setUserState(response.data);
           props.setLoginState(true);
         }, (error) => {
-          console.log(console.log(error));
+          toast.warn('Cannot login user, please enter valid input', { position: toast.POSITION.TOP_CENTER})
         });
       };
-    
+
 
     return(
         <div className = "LoginForm">
@@ -26,6 +30,10 @@ function LoginForm(props) {
           {errors.password && "Password is invalid"}
           <input type="submit" value="Einloggen" />
         </form>
+        <div>
+          <p>Noch kein Konto vorhanden?   <button onClick={() => props.setRegisterForm()}>Registrieren</button></p>
+        </div>
+        <ToastContainer />
       </div>
     )
 }
