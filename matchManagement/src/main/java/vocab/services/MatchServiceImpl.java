@@ -6,7 +6,6 @@ import vocab.domain.*;
 import vocab.repositories.AnswerRepository;
 import vocab.repositories.MatchRepository;
 import vocab.repositories.QuestionRepository;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +73,6 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    @Transactional
     public Boolean submitAnswer(String answer, Question question, Long match_id, User user) {
         List<String> possibleAnswers = question.getCorrectAnswer().getStringTo();
         Boolean isAnswerCorrect = possibleAnswers.contains(answer);
@@ -91,7 +89,6 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    @Transactional
     public Question getQuestion(Long id) {
         return questionRepository.getQuestionById(id);
     }

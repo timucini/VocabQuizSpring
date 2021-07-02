@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
+@Transactional
 public class VocabularyServiceImpl implements VocabularyService {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
@@ -27,13 +28,11 @@ public class VocabularyServiceImpl implements VocabularyService {
         this.categoryRepository = categoryRepository;
     }
 
-    @Transactional
     @Override
     public List<Book> getBooks() {
         return this.bookRepository.findAll();
     }
 
-    @Transactional
     @Override
     public Boolean addFile(File file) throws BadInputFileException {
         List<Book> books = bookRepository.findAll();
@@ -72,18 +71,15 @@ public class VocabularyServiceImpl implements VocabularyService {
     }
 
     @Override
-    @Transactional
     public Category getCategory(Long id) {
         return categoryRepository.getCategoryById(id);
     }
 
     @Override
-    @Transactional
     public Book getBook(Long id) {
         return bookRepository.getBookById(id);
     }
 
-    @Transactional
     @Override
     public Boolean addMultipartFileHelper(MultipartFile file) throws BadInputFileException {
         String resourceString = File.separator+"resources"+File.separator;

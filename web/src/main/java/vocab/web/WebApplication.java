@@ -12,8 +12,6 @@ import vocab.exceptions.BadInputFileException;
 import vocab.services.MatchService;
 import vocab.services.UserService;
 import vocab.services.VocabularyService;
-
-import javax.transaction.Transactional;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +20,6 @@ import java.util.List;
 @EnableJpaRepositories(basePackages = {"vocab"})
 @EntityScan(basePackages = {"vocab"})
 @ComponentScan(basePackages = {"vocab"})
-@Transactional
 public class WebApplication {
 
     public static void main(String[] args) {

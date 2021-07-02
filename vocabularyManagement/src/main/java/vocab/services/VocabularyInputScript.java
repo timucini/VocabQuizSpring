@@ -1,10 +1,16 @@
 package vocab.services;
 
-import java.io.*;
-import java.util.*;
+import vocab.domain.Book;
+import vocab.domain.Category;
+import vocab.domain.Translation;
 
-import jdk.jfr.Description;
-import vocab.domain.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public final class VocabularyInputScript {
 

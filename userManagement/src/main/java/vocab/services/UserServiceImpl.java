@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import vocab.domain.User;
 import vocab.exceptions.ResourceNotFoundException;
 import vocab.repositories.UserRepository;
-
 import javax.transaction.Transactional;
 import java.sql.SQLException;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    @Transactional
     public User addUser(String username, String password) throws SQLException {
         try {
             User user = new User(username,password);
@@ -30,7 +29,6 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    @Transactional
     public User getUser(String username, String password) throws ResourceNotFoundException {
         try {
             return userRepository.getUserByUserNameAndPassword(username,password);
@@ -39,7 +37,6 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    @Transactional
     public User getUserById(Long id) throws ResourceNotFoundException {
         try {
             return userRepository.getUserById(id);

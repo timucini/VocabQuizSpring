@@ -2,14 +2,12 @@ package vocab.services;
 
 import vocab.domain.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * This interface provides methods to manage matches.
  * @version 0.1
  */
-@Transactional
 public interface MatchService {
     /**
      * This method can be used to create a new match.

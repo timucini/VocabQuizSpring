@@ -4,16 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import vocab.domain.Match;
 
-import javax.transaction.Transactional;
-
 @Repository
-@Transactional
 public interface MatchRepository extends JpaRepository<Match, Long> {
-    /**
-     * TODO
-     * add custom Queries
-     */
-    public Match getMatchById(Long id);
-
+    Match getMatchById(Long id);
 }
 
