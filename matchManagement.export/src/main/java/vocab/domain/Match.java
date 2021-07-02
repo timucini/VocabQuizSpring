@@ -10,11 +10,11 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "player1_id", referencedColumnName = "id")
     private User player1;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "player2_id", referencedColumnName = "id")
     private User player2;
 
@@ -22,7 +22,7 @@ public class Match {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "round_id", referencedColumnName = "id")
     private Round currentRound;
 

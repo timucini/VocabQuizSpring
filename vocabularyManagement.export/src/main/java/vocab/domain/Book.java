@@ -1,10 +1,5 @@
 package vocab.domain;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +21,6 @@ public class Book {
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Category> categories =  new ArrayList<>();
 
     public Book(String name, String languageFrom, String languageTo, List<Category> categories) {

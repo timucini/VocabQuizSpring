@@ -16,7 +16,7 @@ public class Round {
             orphanRemoval = true)
     private List<Question> questions =  new ArrayList<>();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 

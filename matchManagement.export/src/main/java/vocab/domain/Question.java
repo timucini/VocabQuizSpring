@@ -12,16 +12,16 @@ public class Question {
     private Long id;
     private String questionString;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "correctAnswer_id", referencedColumnName = "id")
     private Translation CorrectAnswer;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "wrongAnswer1_id", referencedColumnName = "id")
     private Translation WrongAnswer1;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "wrongAnswer2_id", referencedColumnName = "id")
     private Translation WrongAnswer2;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "wrongAnswer3_id", referencedColumnName = "id")
     private Translation WrongAnswer3;
 
