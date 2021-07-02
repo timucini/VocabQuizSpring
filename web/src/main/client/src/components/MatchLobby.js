@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../styling/Match.css';
 
 function MatchLobby(props) {
 
@@ -29,7 +32,7 @@ function MatchLobby(props) {
           console.log(response);
           props.setMatchState(response.data);
         }, (error) => {
-          console.log(console.log(error));
+          toast.warn('Cannot join match', { position: toast.POSITION.TOP_CENTER})
         });
     };
 
@@ -45,14 +48,14 @@ function MatchLobby(props) {
             console.log(response);
             console.log("uploaded successfully")
         }, (error) => {
-          console.log(console.log(error));
+            toast.warn('Cannot add file', { position: toast.POSITION.TOP_CENTER})
         });
     }
 
     
     const matchList = matches.map((match,index) => {
         return(
-            <div key={index}>
+            <div id="match" key={index}>
                 <p>Match-Id: {match.id}</p>
                 <p>Player in Match: {match.player1.userName}</p>
                 <p>Book: {match.book.name}</p>
@@ -63,18 +66,23 @@ function MatchLobby(props) {
 
     return(
         <div className = "MatchLobby">
-            <div>Hello {props.user.userName}</div>
-            {matchList}
-            {/*<button onClick={() => ()}>Refresh Matches</button>*/}
+            <div id="userContainer">Hello {props.user.userName}
             <button onClick={() => props.logOut()}>Ausloggen</button>
-            <p>---------------</p>
-            <button onClick={() => createMatch()}>Create Match</button>
-            <p>--------------</p>
+            </div>
+            <hr/>
+            <h3>Matches in Lobby</h3>
+            <div id="matchList">
+            {matchList}
+            </div>
+            <button id="createBtn" onClick={() => createMatch()}>Create Match</button>
+            <hr/>
+            <h4>Upload file</h4>
             <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                 <input type="file" name="file" {...register('file', { required: true })} />
                 {errors.file && "file is invalid"}
             <input type="submit" value="uploaden" />
-        </form>
+            </form>
+            <ToastContainer />
         </div>
     )
 }

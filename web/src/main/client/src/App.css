@@ -1,5 +1,15 @@
 .App {
   text-align: center;
+  background-color: lightblue;
+  min-height: 800px;
+  height: 100%;
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: center;
+  display: flex;
 }
 
 .App-logo {
@@ -35,4 +45,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#loginBtn {
+  margin-right: 20px;
+}
+
+#registerBtn {
+  margin-left: 20px;
 }

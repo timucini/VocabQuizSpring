@@ -6,7 +6,7 @@ import MatchLobby from './components/MatchLobby';
 import Match from './components/Match';
 import Result from './components/Result';
 import CreateMatch from './components/CreateMatch';
-import axios from "axios";
+
 
 export default function App() {
 
@@ -75,18 +75,20 @@ export default function App() {
         {loggedIn && mactchInProgress && matchfinished &&
           <Result match={match} endMatch={() => endMatch()}/>
         }
-        {!loggedIn && !register && !login &&
-          <button onClick={() => showLoginForm()}>Einloggen</button>
-        }
-        {!loggedIn && !register && !login &&
-         <button onClick={() => showRegisterForm()}>Registrieren</button>
-        }
-        {!loggedIn && register &&
-          <RegisterForm setLoginState={loginState => setLogin(loginState)} setUserState={userState => setUser(userState)} />
-        }
-        {!loggedIn && login &&
-          <LoginForm setLoginState={loginState => setLogin(loginState)} setUserState={userState => setUser(userState)} />
-        }
+        <div id="formContrainer">
+          {!loggedIn && !register && !login &&
+            <button id="loginBtn" onClick={() => showLoginForm()}>Einloggen</button>
+          }
+          {!loggedIn && !register && !login &&
+            <button id="registerBtn" onClick={() => showRegisterForm()}>Registrieren</button>
+          }
+          {!loggedIn && register &&
+            <RegisterForm setLoginForm={() => showLoginForm()} setLoginState={loginState => setLogin(loginState)} setUserState={userState => setUser(userState)} />
+          }
+          {!loggedIn && login &&
+            <LoginForm setRegisterForm={() => showRegisterForm()} setLoginState={loginState => setLogin(loginState)} setUserState={userState => setUser(userState)} />
+          }
+        </div>
     </div>
     
   );

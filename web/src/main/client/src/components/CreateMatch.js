@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import '../styling/Match.css';
 
 
 function CreateMatch(props) {
@@ -19,8 +20,7 @@ function CreateMatch(props) {
 
     const matchList = books.map((book,index) => {
         return(
-            <div key={index}>
-                <p>Book-Id: {book.id}</p>
+            <div id="match" key={index}>
                 <p>Book-Name: {book.name}</p>
                 <p>Translation from: {book.languageFrom}</p>
                 <p>Translation to: {book.languageTo}</p>
@@ -42,7 +42,7 @@ function CreateMatch(props) {
 
     return(
         <div>
-            <div>Create Match</div>
+            <h2>Create Match</h2>
             {matchList}
         </div>
     );
