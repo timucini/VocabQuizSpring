@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vocab.domain.Book;
 import vocab.services.VocabularyService;
-import vocab.services.VocabularyServiceImpl;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class VocabularyController {
     private final VocabularyService vocabularyService;
 
     @Autowired
-    public VocabularyController(VocabularyServiceImpl vocabularyService) {
+    public VocabularyController(VocabularyService vocabularyService) {
         this.vocabularyService = vocabularyService;
     }
 

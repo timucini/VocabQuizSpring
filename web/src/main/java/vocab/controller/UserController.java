@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vocab.domain.User;
 import vocab.services.UserService;
-import vocab.services.UserServiceImpl;
 
 import java.sql.SQLException;
 
@@ -18,7 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

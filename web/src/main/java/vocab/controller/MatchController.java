@@ -19,7 +19,7 @@ public class MatchController {
     private final UserService userService;
 
     @Autowired
-    public MatchController(MatchServiceImpl matchService, VocabularyServiceImpl vocabularyService, UserServiceImpl userService) {
+    public MatchController(MatchService matchService, VocabularyService vocabularyService, UserService userService) {
         this.matchService = matchService;
         this.vocabularyService = vocabularyService;
         this.userService = userService;
