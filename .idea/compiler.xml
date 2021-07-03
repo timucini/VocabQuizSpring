@@ -10,12 +10,14 @@
         <module name="userManagement" />
         <module name="web" />
         <module name="matchManagement.export" />
+        <module name="configuration" />
         <module name="vocabularyManagement.export" />
         <module name="vocabularyManagement" />
         <module name="userManagement.export" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="configuration" target="11" />
       <module name="matchManagement" target="11" />
       <module name="matchManagement.export" target="11" />
       <module name="userManagement" target="11" />
@@ -28,6 +30,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="configuration" options="" />
       <module name="matchManagement" options="-parameters" />
       <module name="matchManagement.export" options="-parameters" />
       <module name="userManagement" options="-parameters" />

@@ -10,6 +10,7 @@
         <module>userManagement.export</module>
         <module>vocabularyManagement.export</module>
         <module>matchManagement.export</module>
+        <module>configuration</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

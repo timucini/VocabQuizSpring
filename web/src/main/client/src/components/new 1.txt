@@ -1,0 +1,20 @@
+Gruppe 5:
+
+#Maven:
+- Build läuft durch
+- Java-Version nur in parent-POM definieren
+
+- Parent-pom besser nicht von spring-boot ableiten
+
+- nur die Konfiguration hat Abhängigkeiten zu spring-boot und zur
+  Datenbank
+
+  
+#Konfiguration und REST-Adapter
+
+#DI mit Spring Context:
+
+#JPA mit Hibernate:
+
+Oberfläche:
+ F fehlt

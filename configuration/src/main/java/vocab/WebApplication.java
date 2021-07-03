@@ -1,4 +1,4 @@
-package vocab.web;
+package vocab;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
