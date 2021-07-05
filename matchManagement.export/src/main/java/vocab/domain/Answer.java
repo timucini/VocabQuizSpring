@@ -20,6 +20,9 @@ public class Answer {
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     private Question question;
 
+    @Version
+    private Long version;
+
     public Answer(String answer, Boolean correct, User user, Question question) {
         this.answer = answer;
         this.correct = correct;

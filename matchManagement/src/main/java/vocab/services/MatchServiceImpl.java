@@ -1,11 +1,15 @@
 package vocab.services;
 
+import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vocab.domain.*;
+import vocab.exceptions.ResourceNotFoundException;
 import vocab.repositories.AnswerRepository;
 import vocab.repositories.MatchRepository;
 import vocab.repositories.QuestionRepository;
+
+import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,24 +34,22 @@ public class MatchServiceImpl implements MatchService {
         Match match= new Match(user,book);
         match.setFinished(false);
         match.setScorePlayer1(0);
-        match.setScorePlayer2(2);
+        match.setScorePlayer2(0);
         return matchRepository.save(match);
     }
 
     @Override
-    public Match getMatch(Long id) {
-//        return matchRepository.findById(id).orElse(null);
-        return matchRepository.getMatchById(id);
+    public Match getMatch(Long id) throws ResourceNotFoundException {
+        try {
+            return matchRepository.getMatchById(id);
+        }catch (RuntimeException e) {
+            throw new ResourceNotFoundException("match with id: "+id.toString()+" not found");
+        }
     }
 
     @Override
-    public Boolean updateMatch(Match match) {
-        try {
-            matchRepository.save(match);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void updateMatch(Match match) throws OptimisticLockException {
+        matchRepository.save(match);
     }
 
     @Override
@@ -61,19 +63,15 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Match joinMatch(User user, Long match_id) {
+    public Match joinMatch(User user, Long match_id) throws OptimisticLockException, ResourceNotFoundException {
         Match match = this.getMatch(match_id);
         match.setPlayer2(user);
-        Boolean matchUpdated = this.updateMatch(match);
-        if (matchUpdated) {
-            return match;
-        } else {
-            return null;
-        }
+        this.updateMatch(match);
+        return match;
     }
 
     @Override
-    public Boolean submitAnswer(String answer, Question question, Long match_id, User user) {
+    public Boolean submitAnswer(String answer, Question question, User user) {
         List<String> possibleAnswers = question.getCorrectAnswer().getStringTo();
         Boolean isAnswerCorrect = possibleAnswers.contains(answer);
         Answer answerObject = new Answer(answer, isAnswerCorrect, user, question);
@@ -82,20 +80,23 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public void finishMatch(Long match_id) {
+    public void finishMatch(Long match_id) throws ResourceNotFoundException, OptimisticLockException {
         Match match = this.getMatch(match_id);
         match.setFinished(true);
         this.updateMatch(match);
     }
 
     @Override
-    public Question getQuestion(Long id) {
-        return questionRepository.getQuestionById(id);
+    public Question getQuestion(Long id) throws ResourceNotFoundException{
+        try {
+            return questionRepository.getQuestionById(id);
+        }catch (RuntimeException e) {
+            throw new ResourceNotFoundException("question with id: "+id.toString()+" not found");
+        }
     }
 
     @Override
-    public Round startRound(Category category, Match match) {
-        //
+    public Round startRound(Category category, Match match) throws OptimisticLockException, ResourceNotFoundException {
         List<Translation> translations = category.getTranslations();
         List<Question> questionList = new ArrayList<>();
         int questionNumber = translations.size() > 3 ? 3 : translations.size();
@@ -113,13 +114,7 @@ public class MatchServiceImpl implements MatchService {
         }
         Round round = new Round(questionList,category);
         match.setCurrentRound(round);
-        boolean matchUpdated = updateMatch(match);
-        if (matchUpdated) {
-            return getMatch(match.getId()).getCurrentRound();
-        } else {
-            return null;
-        }
+        updateMatch(match);
+        return getMatch(match.getId()).getCurrentRound();
     }
-
-
 }

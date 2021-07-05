@@ -8,11 +8,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import vocab.domain.*;
+import vocab.exceptions.ResourceNotFoundException;
 import vocab.repositories.AnswerRepository;
 import vocab.repositories.MatchRepository;
 import vocab.repositories.QuestionRepository;
 import vocab.services.MatchService;
 import vocab.services.MatchServiceImpl;
+
+import javax.persistence.OptimisticLockException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,39 +66,35 @@ public class MatchServiceTest {
     }
 
     @Test
-    public void testGetMatchNull(){
+    public void testGetMatchException(){
         //Arrange
         long id = 123L;
-        Mockito.when(mockedMatchRepository.getMatchById(id)).thenReturn(null);
-        //Act
-        Match requestedMatch = matchService.getMatch(id);
+        Mockito.when(mockedMatchRepository.getMatchById(id)).thenThrow(new RuntimeException());
         //Assert
+        Assert.assertThrows(ResourceNotFoundException.class, () -> matchService.getMatch(id));
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(id);
-        Assert.assertNull(requestedMatch);
     }
 
     @Test
     public void testUpdateMatch(){
         //Arrange
         Match testMatch = new Match();
-        Mockito.when(mockedMatchRepository.save(testMatch)).thenReturn(null);
+        Mockito.when(mockedMatchRepository.save(testMatch)).thenReturn(testMatch);
         //Act
-        Boolean isChanged = matchService.updateMatch(testMatch);
+        matchService.updateMatch(testMatch);
         //Assert
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).save(testMatch);
-        Assert.assertTrue(isChanged);
+        Assert.assertNotNull(testMatch);
     }
 
     @Test
-    public void testUpdateMatchNoChange(){
+    public void testUpdateMatchException(){
         //Arrange
         Match testMatch = new Match();
-        Mockito.when(mockedMatchRepository.save(testMatch)).thenThrow(new RuntimeException());
-        //Act
-        Boolean isChanged = matchService.updateMatch(testMatch);
+        Mockito.when(mockedMatchRepository.save(testMatch)).thenThrow(new OptimisticLockException());
         //Assert
+        Assert.assertThrows(OptimisticLockException.class, () -> matchService.updateMatch(testMatch));
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).save(testMatch);
-        Assert.assertFalse(isChanged);
     }
 
     @Test
@@ -134,28 +133,36 @@ public class MatchServiceTest {
         //Assert
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(id);
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).save(Mockito.any(Match.class));
-        Assert.assertNotNull(testMatch);
+        Assert.assertNotNull(testMatch.getPlayer2());
     }
 
     @Test
-    public void testJoinMatchNull(){
+    public void testJoinMatchResourceNotFoundException(){
         //Arrange
         User testUser = new User();
         long id = 123L;
-        Mockito.when((mockedMatchRepository.getMatchById(123L))).thenReturn(new Match());
-        Mockito.when(mockedMatchRepository.save(Mockito.any(Match.class))).thenThrow(new RuntimeException());
-        //Act
-        Match testMatch = matchService.joinMatch(testUser, id);
+        Mockito.when((mockedMatchRepository.getMatchById(id))).thenThrow(new RuntimeException());
         //Assert
+        Assert.assertThrows(ResourceNotFoundException.class, () -> matchService.joinMatch(testUser, id));
+        Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(id);
+    }
+
+    @Test
+    public void testJoinMatchOptimisticLockException(){
+        //Arrange
+        User testUser = new User();
+        long id = 123L;
+        Mockito.when((mockedMatchRepository.getMatchById(id))).thenReturn(new Match());
+        Mockito.when(mockedMatchRepository.save(Mockito.any(Match.class))).thenThrow(new OptimisticLockException());
+        //Assert
+        Assert.assertThrows(OptimisticLockException.class, () -> matchService.joinMatch(testUser, id));
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(id);
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).save(Mockito.any(Match.class));
-        Assert.assertNull(testMatch);
     }
 
     @Test
     public void testSubmitAnswer(){
         //Arrange
-        long id = 123L;
         Translation correctAnswer = new Translation(Arrays.asList("correct"), Arrays.asList("true"));
         Translation wrongAnswer1 = new Translation(Arrays.asList("wrong1"), Arrays.asList("false1"));
         Translation wrongAnswer2 = new Translation(Arrays.asList("wrong2"), Arrays.asList("false2"));
@@ -164,8 +171,8 @@ public class MatchServiceTest {
         User testUser = new User();
         Mockito.when(mockedAnswerRepository.save(Mockito.any(Answer.class))).then(returnsFirstArg());
         //Act
-        Boolean isCorrect = matchService.submitAnswer(correctAnswer.getStringTo().get(0), testQuestion, id, testUser);
-        Boolean notCorrect = matchService.submitAnswer(wrongAnswer1.getStringTo().get(0), testQuestion, id, testUser);
+        Boolean isCorrect = matchService.submitAnswer(correctAnswer.getStringTo().get(0), testQuestion, testUser);
+        Boolean notCorrect = matchService.submitAnswer(wrongAnswer1.getStringTo().get(0), testQuestion, testUser);
         //Assert
         Mockito.verify(mockedAnswerRepository, Mockito.times(2)).save(Mockito.any(Answer.class));
         Assert.assertTrue(isCorrect);
@@ -184,7 +191,30 @@ public class MatchServiceTest {
         //Assert
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(id);
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).save(Mockito.any(Match.class));
-        Assert.assertTrue(testMatch.getFinished());
+        Assert.assertNotNull(testMatch);
+    }
+
+    @Test
+    public void testFinishMatchResourceNotFoundException(){
+        //Arrange
+        long id = 123L;
+        Mockito.when(mockedMatchRepository.getMatchById(id)).thenThrow(new RuntimeException());
+        //Assert
+        Assert.assertThrows(ResourceNotFoundException.class, () -> matchService.finishMatch(id));
+        Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(id);
+    }
+
+    @Test
+    public void testFinishMatchOptimisticLockException(){
+        //Arrange
+        long id = 123L;
+        Match testMatch = new Match();
+        Mockito.when((mockedMatchRepository.getMatchById(id))).thenReturn(testMatch);
+        Mockito.when(mockedMatchRepository.save(Mockito.any(Match.class))).thenThrow(new OptimisticLockException());
+        //Assert
+        Assert.assertThrows(OptimisticLockException.class, () -> matchService.finishMatch(id));
+        Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(id);
+        Mockito.verify(mockedMatchRepository, Mockito.times(1)).save(Mockito.any(Match.class));
     }
 
     @Test
@@ -200,11 +230,21 @@ public class MatchServiceTest {
         Mockito.verify(mockedQuestionRepository, Mockito.times(1)).getQuestionById(id);
         Assert.assertEquals(id, requestedQuestion.getId().longValue());
     }
+    @Test
+    public void testGetQuestionException(){
+        //Arrange
+        long id = 123L;
+        Mockito.when(mockedQuestionRepository.getQuestionById(id)).thenThrow(new RuntimeException());
+        //Assert
+        Assert.assertThrows(ResourceNotFoundException.class, () -> matchService.getQuestion(id));
+        Mockito.verify(mockedQuestionRepository, Mockito.times(1)).getQuestionById(id);
+    }
 
     @Test
     public void testStartRound(){
         //Arrange
         long id = 123L;
+        long failId = 456L;
         Translation translationA = new Translation(Arrays.asList("a"),Arrays.asList("A"));
         Translation translationB = new Translation(Arrays.asList("b"),Arrays.asList("B"));
         Translation translationC = new Translation(Arrays.asList("c"),Arrays.asList("C"));
@@ -215,15 +255,17 @@ public class MatchServiceTest {
         Match failMatch = new Match();
         Mockito.when(mockedMatchRepository.save(testMatch)).then(returnsFirstArg());
         Mockito.when(mockedMatchRepository.getMatchById(id)).thenReturn(testMatch);
-        Mockito.when(mockedMatchRepository.save(failMatch)).thenThrow(new RuntimeException());
+        Mockito.when(mockedMatchRepository.getMatchById(failId)).thenThrow(new RuntimeException());
+        Mockito.when(mockedMatchRepository.save(failMatch)).thenThrow(new OptimisticLockException());
         //Act
         Round startedRound = matchService.startRound(testCategory, testMatch);
-        Round failRound = matchService.startRound(testCategory, failMatch);
         //Assert
+        Assert.assertThrows(ResourceNotFoundException.class, () -> matchService.getMatch(failId));
+        Assert.assertThrows(OptimisticLockException.class, () -> matchService.startRound(testCategory, failMatch));
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).save(testMatch);
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).save(failMatch);
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(id);
+        Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(failId);
         Assert.assertNotNull(startedRound);
-        Assert.assertNull(failRound);
     }
 }

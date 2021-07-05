@@ -12,6 +12,7 @@ import vocab.domain.Book;
 import vocab.domain.Category;
 import vocab.domain.Translation;
 import vocab.exceptions.BadInputFileException;
+import vocab.exceptions.ItemNotFoundException;
 import vocab.repositories.BookRepository;
 import vocab.repositories.CategoryRepository;
 import vocab.services.VocabularyService;
@@ -106,15 +107,14 @@ public class VocabularyServiceTest {
         Category testCategory = new Category();
         testCategory.setId(id);
         Mockito.when(mockedCategoryRepository.getCategoryById(id)).thenReturn(testCategory);
-        Mockito.when(mockedCategoryRepository.getCategoryById(wrong_id)).thenReturn(null);
+        Mockito.when(mockedCategoryRepository.getCategoryById(wrong_id)).thenThrow(new RuntimeException());
         //Act
         Category requestedCategory = vocabularyService.getCategory(id);
-        Category nullCategory = vocabularyService.getCategory(wrong_id);
         // Assert
+        Assert.assertThrows(ItemNotFoundException.class, () -> vocabularyService.getCategory(wrong_id));
         Mockito.verify(mockedCategoryRepository, Mockito.times(1)).getCategoryById(id);
         Mockito.verify(mockedCategoryRepository, Mockito.times(1)).getCategoryById(wrong_id);
         Assert.assertEquals(id, requestedCategory.getId().longValue());
-        Assert.assertNull(nullCategory);
     }
 
     @Test
@@ -125,15 +125,14 @@ public class VocabularyServiceTest {
         Book testBook = new Book();
         testBook.setId(id);
         Mockito.when(mockedBookRepository.getBookById(id)).thenReturn(testBook);
-        Mockito.when(mockedBookRepository.getBookById(wrong_id)).thenReturn(null);
+        Mockito.when(mockedBookRepository.getBookById(wrong_id)).thenThrow(new RuntimeException());
         //Act
         Book requestedBook = vocabularyService.getBook(id);
-        Book nullBook = vocabularyService.getBook(wrong_id);
         // Assert
+        Assert.assertThrows(ItemNotFoundException.class, () -> vocabularyService.getBook(wrong_id));
         Mockito.verify(mockedBookRepository, Mockito.times(1)).getBookById(id);
         Mockito.verify(mockedBookRepository, Mockito.times(1)).getBookById(wrong_id);
         Assert.assertEquals(id, requestedBook.getId().longValue());
-        Assert.assertNull(nullBook);
     }
 
     @Test

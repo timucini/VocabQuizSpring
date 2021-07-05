@@ -99,10 +99,10 @@ public class MatchController {
     }
 
     @GetMapping("/answer")
-    public ResponseEntity<Boolean> submitAnswer(@RequestParam String answer, Long question_id, Long match_id, Long user_id) {
+    public ResponseEntity<Boolean> submitAnswer(@RequestParam String answer, Long question_id, Long user_id) {
         Question question = matchService.getQuestion(question_id);
         User user = userService.getUserById(user_id);
-        Boolean answerIsCorrect = matchService.submitAnswer(answer, question, match_id, user);
+        Boolean answerIsCorrect = matchService.submitAnswer(answer, question, user);
         if (answerIsCorrect != null) {
             return new ResponseEntity<>(answerIsCorrect, HttpStatus.OK);
         } else {

@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 import vocab.domain.Book;
 import vocab.domain.Category;
 import vocab.exceptions.BadInputFileException;
+import vocab.exceptions.ItemNotFoundException;
 
 import java.io.File;
 import java.util.List;
@@ -31,15 +32,17 @@ public interface VocabularyService {
      * This method is used to get a category.
      * @param id The method requires the id representing the category.
      * @return The method returns the category, or null in case of not finding the requested category.
+     * @throws ItemNotFoundException The method throws an exception in case there is no book with a matching id.
      */
-    Category getCategory(Long id);
+    Category getCategory(Long id) throws ItemNotFoundException;
 
     /**
      * This method is used to get a book.
      * @param id The method requires the id representing the book.
      * @return The method returns the book, or null in case of not finding the requested book.
+     * @throws ItemNotFoundException The method throws an exception in case there is no book with a matching id.
      */
-    Book getBook(Long id);
+    Book getBook(Long id) throws ItemNotFoundException;
 
     /**
      * This method is used to insert a multipart file into the database.
@@ -47,5 +50,5 @@ public interface VocabularyService {
      * @return The method returns a boolean which indicates that te database was changed.
      * @throws BadInputFileException The method throws a exception if the provided file is not using the standard vocabulary format.
      */
-    Boolean addMultipartFileHelper(MultipartFile file) throws  BadInputFileException;
+    Boolean addMultipartFileHelper(MultipartFile file) throws BadInputFileException;
 }

@@ -10,6 +10,9 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Version
+    private Long version;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "player1_id", referencedColumnName = "id")
     private User player1;

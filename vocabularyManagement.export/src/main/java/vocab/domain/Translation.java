@@ -12,6 +12,9 @@ public class Translation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Version
+    private Long version;
+
     @ElementCollection
     private List<String> stringFrom = new ArrayList<>();
 

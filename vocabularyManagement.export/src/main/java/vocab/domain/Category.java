@@ -12,6 +12,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Version
+    private Long version;
+
     private String name;
 
     @OneToMany(

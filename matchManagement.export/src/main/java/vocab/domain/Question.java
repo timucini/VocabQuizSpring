@@ -12,6 +12,9 @@ public class Question {
     private Long id;
     private String questionString;
 
+    @Version
+    private Long version;
+
     @ManyToOne
     @JoinColumn(name = "correctAnswer_id", referencedColumnName = "id")
     private Translation CorrectAnswer;

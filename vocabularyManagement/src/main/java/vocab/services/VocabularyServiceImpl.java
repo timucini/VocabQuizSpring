@@ -7,6 +7,7 @@ import vocab.domain.Book;
 import vocab.domain.Category;
 import vocab.domain.Translation;
 import vocab.exceptions.BadInputFileException;
+import vocab.exceptions.ItemNotFoundException;
 import vocab.repositories.BookRepository;
 import vocab.repositories.CategoryRepository;
 
@@ -71,13 +72,21 @@ public class VocabularyServiceImpl implements VocabularyService {
     }
 
     @Override
-    public Category getCategory(Long id) {
-        return categoryRepository.getCategoryById(id);
+    public Category getCategory(Long id) throws ItemNotFoundException {
+        try{
+            return categoryRepository.getCategoryById(id);
+        }catch (RuntimeException e){
+            throw new ItemNotFoundException("category with id: "+id.toString()+" could not be found");
+        }
     }
 
     @Override
-    public Book getBook(Long id) {
-        return bookRepository.getBookById(id);
+    public Book getBook(Long id) throws ItemNotFoundException {
+        try{
+            return bookRepository.getBookById(id);
+        }catch (RuntimeException e){
+            throw new ItemNotFoundException("book with id: "+id.toString()+" could not be found");
+        }
     }
 
     @Override

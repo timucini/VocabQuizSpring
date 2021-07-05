@@ -28,6 +28,8 @@ public class User {
     @Column(name = "password",nullable = false, columnDefinition = "TEXT")
     private String password;
 
+    @Version
+    private Long version;
 
     public User( String userName, String password) {
         this.userName = userName;

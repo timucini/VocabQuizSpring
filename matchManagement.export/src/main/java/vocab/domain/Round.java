@@ -11,6 +11,9 @@ public class Round {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Version
+    private Long version;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true)
