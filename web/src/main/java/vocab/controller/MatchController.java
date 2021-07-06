@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import vocab.domain.*;
 import vocab.services.*;
 
+import javax.persistence.OptimisticLockException;
 import java.util.List;
 
 @RestController
@@ -83,6 +84,9 @@ public class MatchController {
                 String errorMsg = "Error while joining Match";
                 return new ResponseEntity<>(errorMsg, HttpStatus.CONFLICT);
             }
+        } catch (OptimisticLockException exception) {
+            String errorMsg= "Error due to OptimisticLocking";
+            return new ResponseEntity<>(errorMsg,HttpStatus.LOCKED);
         } catch (Exception exception) {
             String errorMsg = "Error while requesting";
             return new ResponseEntity<>(errorMsg,HttpStatus.BAD_REQUEST);

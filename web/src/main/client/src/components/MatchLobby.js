@@ -32,6 +32,8 @@ function MatchLobby(props) {
           console.log(response);
           props.setMatchState(response.data);
         }, (error) => {
+            console.log(error);
+            console.log(error.response);
           toast.warn('Cannot join match', { position: toast.POSITION.TOP_CENTER})
         });
     };
