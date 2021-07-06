@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {render} from "@testing-library/react";
-
 
 function Round(props) {
 
 
 
     const [questionNumber, setQuestionNumber] = useState(0);
-    const [currentQuestion, setQuestion] = useState([]);
     const [lastAnswerValidation, setLastAnswerValidation] = useState(true);
     const [roundFinished, setRoundFinished] = useState(false);
 

@@ -10,13 +10,12 @@ function Match(props) {
     const [awaitPlayer, setAwait] = useState(false);
     const [awaitCategoryPicking, setPicking] = useState(false);
     const [currentRound, setRound] = useState([]);
-    const [roundStarted, setRoundStarted] = useState(false);
     const [pickingTurn, setPickingTurn] = useState(false);
     const [roundFinished, setRoundFinished] = useState(false);
     const [roundNumber, setRoundNumber] = useState(1);
 
     const checkPlayerNumber = () => {
-        if ( props.user.id == props.match.player1.id) {
+        if ( props.user.id === props.match.player1.id) {
             setPlayerNumber(1);
             setPickingTurn(true);
         } else {

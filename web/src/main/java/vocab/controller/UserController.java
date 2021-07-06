@@ -22,23 +22,25 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestBody User user ) {
+    public ResponseEntity<Object> addUser(@RequestBody User user ) {
         try {
             User addedUser = userService.addUser(user.getUserName(), user.getPassword());
             return new ResponseEntity<>(addedUser, HttpStatus.OK);
-        } catch (SQLException throwables) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch (SQLException throwable) {
+            String errorMsg = "Username already in use";
+            return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/get")
-    public ResponseEntity<User> getUser(@RequestParam String userName, String password) {
+    public ResponseEntity<Object> getUser(@RequestParam String userName, String password) {
         User foundUser = userService.getUser(userName, password);
         if (foundUser != null) {
             return new ResponseEntity<>(foundUser, HttpStatus.OK);
         }
         else  {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            String errorMsg = "Can't login, check your username and password";
+            return new ResponseEntity<>(errorMsg, HttpStatus.NOT_FOUND);
         }
     }
 }

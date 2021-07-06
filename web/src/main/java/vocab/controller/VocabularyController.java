@@ -24,32 +24,36 @@ public class VocabularyController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<List<Book>> getBooks() {
+    public ResponseEntity<Object> getBooks() {
         try {
             List<Book> books = vocabularyService.getBooks();
             if (books != null) {
                 return new ResponseEntity<>(books, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+                String errorMsg = "Cannot get books from database";
+                return new ResponseEntity<>(errorMsg, HttpStatus.NOT_FOUND);
             }
         } catch (Exception exception) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            String errorMsg = "Error while requesting";
+            return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
         }
     }
 
     @ResponseBody
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Boolean> uploadFiles(@RequestParam(name = "file") MultipartFile file) {
+    public ResponseEntity<Object> uploadFiles(@RequestParam(name = "file") MultipartFile file) {
         try {
             System.out.println("uploaded");
             Boolean succeeded = vocabularyService.addMultipartFileHelper(file);
             if (succeeded)  {
                 return new ResponseEntity<>(true, HttpStatus.OK);
             } else  {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                String errorMsg = "Can't add book to database";
+                return new ResponseEntity<>(errorMsg, HttpStatus.CONFLICT);
             }
         } catch (Exception exception) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            String errorMsg = "Error while requesting";
+            return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {render} from "@testing-library/react";
 
 
 function Result(props) {
