@@ -1,0 +1,139 @@
+%Kompatibilitätspakete:
+\usepackage{scrhack}
+
+%Zeichen- und Schriftpakete:
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{uarial}\recalctypearea
+
+%Sprachpakete
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+  %Einstellungen:
+  \MakeOuterQuote{"}
+
+%Bild-/Tabellen- und Figurenpakete:
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+  %Einstellungen:
+  \addto\captionsngerman{
+    \crefname{chapter}{kap.}{kap.}
+    \Crefname{chapter}{Kap.}{Kap.}
+    \crefname{subsubsection}{abs.}{abs.}
+    \Crefname{subsubsection}{Abs.}{Abs.}
+    \crefname{subsection}{abs.}{abs.}
+    \Crefname{subsection}{Abs.}{Abs.}
+    \crefname{section}{abs.}{abs.}
+    \Crefname{section}{Abs.}{Abs.}
+    \crefname{figure}{abb.}{abb.}
+    \Crefname{figure}{Abb.}{Abb.}
+    \crefname{table}{tab.}{tab.}
+    \Crefname{table}{Tab.}{Tab.}
+    \renewcommand{\figurename}{Abb.}
+    \renewcommand{\tablename}{Tab.}
+  }
+\usepackage{graphicx}
+  %Bildrandeinstellungen:
+  \setlength{\fboxsep}{0pt}
+  \setlength{\fboxrule}{1pt}
+\usepackage{epstopdf}  
+
+%Fußnotenpakete
+\usepackage[bottom]{footmisc}
+
+%Farbpakete:
+\usepackage{color}
+  %Eigene Farben:
+  \definecolor{htwgreen}{rgb}{0.26, 0.73, 0.00}
+  \definecolor{darkgray}{rgb}{0.30, 0.30, 0.30}
+  \definecolor{lightgray}{rgb}{0.65, 0.65, 0.65}
+  \definecolor{orange}{rgb}{1.0, 0.43, 0.29}
+  \definecolor{commentgreen}{rgb}{0.29, 0.6, 0.3}
+  \definecolor{anyellow}{rgb}{0.92, 0.94, 0.34}
+  %Farbeinstellungen:
+  \addtokomafont{pagenumber}{\color{htwgreen}}
+  \addtokomafont{author}{\color{lightgray}}
+  \addtokomafont{sectioning}{\color{htwgreen}}
+  \addtokomafont{chapterentrypagenumber}{\color{darkgray}}
+  \color{darkgray}
+
+%Funktionspakete:
+  %Abkürzungen:
+  \usepackage{acronym}
+  %Blindtext:
+  \usepackage{blindtext}
+  %Einbinden von PDF:
+  \usepackage{pdfpages}
+  %Seitenränder einblenden:
+  %\usepackage{showframe}
+  %URLs und Hyperlinks:
+  \usepackage{url}
+  \usepackage[breaklinks=true]{hyperref}
+    %Einstellungen:
+    \hypersetup{
+      colorlinks=true,
+      linkcolor=darkgray,
+      citecolor=htwgreen,
+      urlcolor=cyan
+    }
+  %Nummerierungen und Aufzählungen:
+  \usepackage{enumitem}
+  %Coding
+  \usepackage{listings}
+  \lstset{
+    linewidth=\textwidth,
+    frame=tb,
+    language=Java,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=none,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{commentgreen},
+    stringstyle=\color{orange},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=3
+  }
+
+%Positionspakete:
+\usepackage{ragged2e}
+
+%Kopf- und Fußzeilenpakete:
+\usepackage[singlespacing=true]{scrlayer-scrpage}
+  %Einstellungen:
+  \clearpairofpagestyles
+  \ohead{\pagemark}
+  \renewcommand*\chapterpagestyle{scrheadings}
+  \setlength{\headsep}{12pt}
+  \setlength{\headheight}{24pt}
+  \setlength{\footskip}{12pt}
+  \setlength{\footheight}{24pt}
+
+%Literaturpakete:
+\usepackage[backend=biber,style=authoryear-ibid,hyperref]{biblatex}
+  %Einstellungen:
+  \setcounter{biburllcpenalty}{9000}% Kleinbuchstaben
+  \setcounter{biburlucpenalty}{9000}% Großbuchstaben
+  \addbibresource{Literatur.bib}
+
+%Pakete für Verknüpfungen und Referenzen:
+\usepackage[ngerman]{cleveref}
+
+%Einstellungen für Abstände:
+\renewcommand*{\chapterheadstartvskip}{\vspace*{6pt}}
+\renewcommand*{\chapterheadendvskip}{\vspace{6pt}}
+\setlength{\parskip}{6pt}
+\setlength{\footnotesep}{6pt}
+\setlength{\skip\footins}{1ex}
+\renewcommand*{\headfont}{\normalfont}
+%\renewcommand*{\arraystretch}{1.5}
+\setlength{\parindent}{0pt}
+\linespread{1.5}
+
+\usepackage{chngcntr}
+\counterwithout{footnote}{chapter}

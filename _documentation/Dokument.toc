@@ -1,0 +1,20 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {ngerman}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Inhaltsverzeichnis}{I}{chapter*.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Abbildungsverzeichnis}{II}{chapter*.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {1}Komponentenschnitt}{1}{chapter.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {2}Schnittstellenbeschreibung}{3}{chapter.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {3}Konzeptionelles Datenmodell}{9}{chapter.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {4}Präsentationsschicht}{10}{chapter.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {5}Frameworks}{11}{chapter.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {6}Ablaufumgebung}{12}{chapter.6}%
+\defcounter {refsection}{0}\relax 
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
