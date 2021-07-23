@@ -24,6 +24,9 @@ function MatchLobby(props) {
     const createMatch = () => {
         props.setCreateState(true);
     }
+    const updateMatchlist = () => {
+        fetchAvailableMatches();
+    }
 
     const joinMatch = (matchId) => {
         console.log(matchId);
@@ -41,18 +44,14 @@ function MatchLobby(props) {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
 
-    const onSubmit = (data) => { 
-        console.log(data)
+    const onSubmit = (data) => {
         const formData = new FormData();
         formData.append("file", data.file[0]);
-        console.log(formData);
         axios.post("http://localhost:8080/api/v1/vocab/upload", formData).then(response => {
-            console.log(response);
-            console.log("uploaded successfully")
         }, (error) => {
             toast.warn('Cannot add file', { position: toast.POSITION.TOP_CENTER})
         });
-    }
+    };
 
     
     const matchList = matches.map((match,index) => {
@@ -76,6 +75,7 @@ function MatchLobby(props) {
             <div id="matchList">
             {matchList}
             </div>
+            <button id="createBtn" onClick={() => updateMatchlist()}>Update Matchlist</button>
             <button id="createBtn" onClick={() => createMatch()}>Create Match</button>
             <hr/>
             <h4>Upload file</h4>
