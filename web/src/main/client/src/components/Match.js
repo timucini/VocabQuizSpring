@@ -13,6 +13,7 @@ function Match(props) {
     const [pickingTurn, setPickingTurn] = useState(false);
     const [roundFinished, setRoundFinished] = useState(false);
     const [roundNumber, setRoundNumber] = useState(1);
+    const [currentRoundId, setCurrentRoundId] = useState(0);
 
     const checkPlayerNumber = () => {
         if ( props.user.id === props.match.player1.id) {
@@ -42,6 +43,7 @@ function Match(props) {
           // let props = {data: response.data, match: props.match, user: props.user};
           setRound(response.data);
           setPicking(false);
+          setCurrentRoundId(response.data.id)
         }, (error) => {
           console.log(console.log(error));
         });
@@ -128,10 +130,13 @@ function Match(props) {
     const updateMatch = () => {
         axios.get("http://localhost:8080/api/v1/match/match",
             { params: { match_id: props.match.id }}).then(res => {
-            setRound(res.data.currentRound);
-            setMatchStarted(true);
-            setAwait(false);
-            setPicking(false);
+            if (res.data.currentRound != null && res.data.currentRound.id !== currentRoundId) {
+                setRound(res.data.currentRound);
+                setMatchStarted(true);
+                setAwait(false);
+                setPicking(false);
+                setCurrentRoundId(res.data.currentRound.id);
+            }
         });
     };
 
