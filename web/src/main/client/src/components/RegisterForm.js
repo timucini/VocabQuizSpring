@@ -6,13 +6,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function RegisterForm(props) {
+
     const { register, formState: { errors }, handleSubmit } = useForm();
 
 
     const onSubmit = (data) => {
-        console.log(data)
         axios.post("http://localhost:8080/api/v1/user/add", data).then(response => {
-          console.log(response);
           props.setUserState(response.data);
           props.setLoginState(true);
         }, (error) => {
