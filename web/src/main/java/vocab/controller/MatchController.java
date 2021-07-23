@@ -8,6 +8,7 @@ import vocab.domain.*;
 import vocab.services.*;
 
 import javax.persistence.OptimisticLockException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -112,10 +113,19 @@ public class MatchController {
     }
 
     @GetMapping("/answer")
-    public ResponseEntity<Object> submitAnswer(@RequestParam String answer, Long question_id, Long user_id) {
+    public ResponseEntity<Object> submitAnswer(@RequestParam String answer, Long question_id, Long user_id, Long match_id) {
         Question question = matchService.getQuestion(question_id);
         User user = userService.getUserById(user_id);
         Boolean answerIsCorrect = matchService.submitAnswer(answer, question, user);
+        Match match = matchService.getMatch(match_id);
+        if (answerIsCorrect) {
+            if (user_id.equals(match.getPlayer1().getId())) {
+                match.setScorePlayer1(match.getScorePlayer1()+1);
+            } else if (user_id.equals(match.getPlayer2().getId())) {
+                match.setScorePlayer2(match.getScorePlayer2()+1);
+            }
+            matchService.updateMatch(match);
+        }
         if (answerIsCorrect != null) {
             return new ResponseEntity<>(answerIsCorrect, HttpStatus.OK);
         } else {
@@ -127,6 +137,17 @@ public class MatchController {
     @GetMapping("/finish")
     private void finishMatch(@RequestParam Long match_id) {
         matchService.finishMatch(match_id);
+    }
+
+    @GetMapping("/scores")
+    private ResponseEntity<Object> getScores(@RequestParam Long match_id) {
+        ArrayList<Integer> scores = matchService.getScores(match_id);
+        if (!scores.isEmpty()) {
+            return new ResponseEntity<>(scores, HttpStatus.OK);
+        } else {
+            String errorMsg = "Error while requesting";
+            return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
