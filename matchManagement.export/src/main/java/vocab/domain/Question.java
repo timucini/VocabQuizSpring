@@ -17,16 +17,16 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "correctAnswer_id", referencedColumnName = "id")
-    private Translation CorrectAnswer;
+    private Translation answer1;
     @ManyToOne
     @JoinColumn(name = "wrongAnswer1_id", referencedColumnName = "id")
-    private Translation WrongAnswer1;
+    private Translation answer2;
     @ManyToOne
     @JoinColumn(name = "wrongAnswer2_id", referencedColumnName = "id")
-    private Translation WrongAnswer2;
+    private Translation answer3;
     @ManyToOne
     @JoinColumn(name = "wrongAnswer3_id", referencedColumnName = "id")
-    private Translation WrongAnswer3;
+    private Translation answer4;
 
     @OneToMany(
             fetch = FetchType.EAGER,
@@ -35,12 +35,12 @@ public class Question {
             orphanRemoval = true)
     private List<Answer> answers =  new ArrayList<>();
 
-    public Question(String questionString, Translation correctAnswer, Translation wrongAnswer1, Translation wrongAnswer2, Translation wrongAnswer3) {
+    public Question(String questionString, Translation answer1, Translation answer2, Translation answer3, Translation answer4) {
         this.questionString = questionString;
-        CorrectAnswer = correctAnswer;
-        WrongAnswer1 = wrongAnswer1;
-        WrongAnswer2 = wrongAnswer2;
-        WrongAnswer3 = wrongAnswer3;
+        this.answer1 = answer1;
+        this.answer2 = answer2;
+        this.answer3 = answer3;
+        this.answer4 = answer4;
     }
 
     public Question() {
@@ -63,36 +63,36 @@ public class Question {
         this.questionString = questionString;
     }
 
-    public Translation getCorrectAnswer() {
-        return CorrectAnswer;
+    public Translation getAnswer1() {
+        return answer1;
     }
 
-    public void setCorrectAnswer(Translation correctAnswer) {
-        CorrectAnswer = correctAnswer;
+    public void setAnswer1(Translation answer1) {
+        this.answer1 = answer1;
     }
 
-    public Translation getWrongAnswer1() {
-        return WrongAnswer1;
+    public Translation getAnswer2() {
+        return answer2;
     }
 
-    public void setWrongAnswer1(Translation wrongAnswer1) {
-        WrongAnswer1 = wrongAnswer1;
+    public void setAnswer2(Translation answer2) {
+        this.answer2 = answer2;
     }
 
-    public Translation getWrongAnswer2() {
-        return WrongAnswer2;
+    public Translation getAnswer3() {
+        return answer3;
     }
 
-    public void setWrongAnswer2(Translation wrongAnswer2) {
-        WrongAnswer2 = wrongAnswer2;
+    public void setAnswer3(Translation answer3) {
+        this.answer3 = answer3;
     }
 
-    public Translation getWrongAnswer3() {
-        return WrongAnswer3;
+    public Translation getAnswer4() {
+        return answer4;
     }
 
-    public void setWrongAnswer3(Translation wrongAnswer3) {
-        WrongAnswer3 = wrongAnswer3;
+    public void setAnswer4(Translation answer4) {
+        this.answer4 = answer4;
     }
 
     public List<Answer> getAnswers() {
