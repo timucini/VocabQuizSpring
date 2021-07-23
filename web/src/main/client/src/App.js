@@ -6,6 +6,7 @@ import MatchLobby from './components/MatchLobby';
 import Match from './components/Match';
 import Result from './components/Result';
 import CreateMatch from './components/CreateMatch';
+import axios from "axios";
 
 
 export default function App() {
@@ -26,6 +27,8 @@ export default function App() {
   const [matchfinished, setMatchFinished] = useState(false);
 
   const [createMatch, setCreateMatch] = useState(false);
+
+  const [endScore, setEndScore] = useState([]);
 
   function showLoginForm() {
     setLoginForm(true);
@@ -52,6 +55,12 @@ export default function App() {
   }
 
   function finishMatch() {
+    axios.get("http://localhost:8080/api/v1/match/scores",
+        { params: { match_id: match.id }}).then(response => {
+      setEndScore(response.data);
+    }, (error) => {
+      console.log(console.log(error));
+    });
     setMatchFinished(true);
   }
 
@@ -73,7 +82,7 @@ export default function App() {
           <Match match={match} user={user} finishMatch={() => finishMatch()}/>
         }
         {loggedIn && mactchInProgress && matchfinished &&
-          <Result match={match} endMatch={() => endMatch()}/>
+          <Result match={match} scores={endScore} endMatch={() => endMatch()}/>
         }
         <div id="formContrainer">
           {!loggedIn && !register && !login &&
