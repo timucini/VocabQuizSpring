@@ -7,13 +7,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 function LoginForm(props) {
+
     const { register, formState: { errors }, handleSubmit } = useForm();
 
 
     const onSubmit = (data) => {
-        console.log(data)
         axios.get("http://localhost:8080/api/v1/user/get", { params: { userName: data.userName, password: data.password}}).then(response => {
-          console.log(response);
           props.setUserState(response.data);
           props.setLoginState(true);
         }, (error) => {
