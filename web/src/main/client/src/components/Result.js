@@ -15,9 +15,9 @@ function Result(props) {
         });
     }
     const renderScore = () => {
-        getMatch();
+        // getMatch();
             return (
-                <div>Player1 {match.scorePlayer1} : {match.scorePlayer2} Player2</div>
+                <div>Player1 {props.scores[0]} : {props.scores[1]} Player2</div>
             )
     }
 

@@ -1,6 +1,5 @@
 package vocab.services;
 
-import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vocab.domain.*;
@@ -72,7 +71,7 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public Boolean submitAnswer(String answer, Question question, User user) {
-        List<String> possibleAnswers = question.getCorrectAnswer().getStringTo();
+        List<String> possibleAnswers = question.getAnswer1().getStringTo();
         Boolean isAnswerCorrect = possibleAnswers.contains(answer);
         Answer answerObject = new Answer(answer, isAnswerCorrect, user, question);
         Answer submittedAnswer = answerRepository.save(answerObject);
@@ -104,17 +103,33 @@ public class MatchServiceImpl implements MatchService {
             int otherTranslationIndex = i > translations.size() ? i-1 : i+1;
             Translation translation = translations.get(i);
 
+            int max = translations.size()-1;
+            int min = 0;
+            int range = max - min + 1;
+            int translationIndex1 = (int)(Math.random() * range) + min;
+            int translationIndex2 = (int)(Math.random() * range) + min;
+            int translationIndex3 = (int)(Math.random() * range) + min;
+
             Question question = new Question(
                     translation.getStringFrom().get(0),
                     translation,
-                    translations.get(0),
-                    translations.get(0),
-                    translations.get(0));
+                    translations.get(translationIndex1),
+                    translations.get(translationIndex2),
+                    translations.get(translationIndex3));
             questionList.add(question);
         }
         Round round = new Round(questionList,category);
         match.setCurrentRound(round);
         updateMatch(match);
         return getMatch(match.getId()).getCurrentRound();
+    }
+
+    @Override
+    public ArrayList<Integer> getScores(Long match_id) {
+        Match match = this.getMatch(match_id);
+        ArrayList<Integer> scores = new ArrayList<>();
+        scores.add(match.getScorePlayer1());
+        scores.add(match.getScorePlayer2());
+        return scores;
     }
 }

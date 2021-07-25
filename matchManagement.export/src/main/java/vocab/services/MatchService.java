@@ -4,6 +4,7 @@ import vocab.domain.*;
 import vocab.exceptions.ResourceNotFoundException;
 
 import javax.persistence.OptimisticLockException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -84,4 +85,11 @@ public interface MatchService {
      * @throws ResourceNotFoundException The method throws an exception case of the match cannot be found.
      */
     Round startRound(Category category, Match match) throws OptimisticLockException, ResourceNotFoundException;
+
+    /**
+     * This method provides the functionality to get the scores of both players
+     * @param match_id The method requires the id of the match.
+     * @return The method returns a list which has the score of player 1 and player 2.
+     */
+    ArrayList<Integer> getScores(Long match_id);
 }
