@@ -5,7 +5,7 @@
     \caption{Komponentendiagramm}
     \label{komp}
 \end{figure}
-Wie in Abbildung \ref{komp} zu sehen ist, besteht die Software aus vier Komponenten. Im folgenden werden die Aufgaben dieser Komponenten näher beschrieben.
+Wie in Abbildung \ref{komp} zu sehen ist, besteht die Software aus vier Komponenten. Im Folgenden werden die Aufgaben dieser Komponenten näher beschrieben.
 \section*{Web}
 Die "Web" Komponente stellt die eigentliche Serveranwendung dar. Diese verwaltet somit den Zugriff über den Client bzw. der GUI auf die Anwendungslogik. Dementsprechend ist sie über Interfaces mit den anderen Komponenten verbunden.
 \section*{UserManagement}
@@ -210,10 +210,64 @@ public interface VocabularyService {
 \clearpage
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \chapter{Konzeptionelles Datenmodell}
-\clearpage
+Im Folgenden ist das verwendete Datenbankmodell zu sehen.
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/tabellen-diagramm.png}}
+    \caption{Datenmodell}
+\end{figure}
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \chapter{Präsentationsschicht}
-\clearpage
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/Startbildschirm.png}}
+    \caption{Startbildschirm}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/register.png}}
+    \caption{Registrierung}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/login.png}}
+    \caption{Einloggen}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/matchLobby2.png}}
+    \caption{Match-Lobby}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/createMatch.png}}
+    \caption{Match erstellen}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/startMatch.png}}
+    \caption{Match starten}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/pickCategory.png}}
+    \caption{Kategorie auswählen}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/submittedAnswer.png}}
+    \caption{Antwort abgegeben}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/2ndPlayerToWaitFor1stToPickCategory.png}}
+    \caption{Auf zweiten Spieler warten}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.99\textwidth-2\fboxsep-2\fboxrule]{Includes/frontend/finishMatchScore.png}}
+    \caption{Match fertigstellen}
+\end{figure}
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \chapter{Frameworks}
 \begin{itemize}
@@ -232,6 +286,7 @@ public interface VocabularyService {
         Betriebssystem & Windows 10 \\
         Java & JDK 11 \\
         Maven & 4.0.0 \\
+        Datenbank & PostgreSQL 13 \\
     \end{tabular}
 \end{table}
 \clearpage
