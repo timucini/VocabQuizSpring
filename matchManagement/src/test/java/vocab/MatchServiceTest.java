@@ -268,4 +268,25 @@ public class MatchServiceTest {
         Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(failId);
         Assert.assertNotNull(startedRound);
     }
+
+    @Test
+    public void testGetScores() {
+        //Arrange
+        Match testMatch = new Match();
+        long id = 123L;
+        testMatch.setId(id);
+        int scorePlayer1 = 3;
+        int scorePlayer2 = 5;
+        testMatch.setScorePlayer1(scorePlayer1);
+        testMatch.setScorePlayer2(scorePlayer2);
+        ArrayList<Integer> testScores = new ArrayList<>();
+        testScores.add(3);
+        testScores.add(5);
+        Mockito.when(mockedMatchRepository.getMatchById(id)).thenReturn(testMatch);
+        //Act
+        ArrayList<Integer> requestedScores = matchService.getScores(id);
+        //Assert
+        Mockito.verify(mockedMatchRepository, Mockito.times(1)).getMatchById(id);
+        Assert.assertEquals(testScores, requestedScores);
+    }
 }
